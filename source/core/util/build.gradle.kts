@@ -20,7 +20,9 @@ dependencies {
     implementation(libs.gson)
 
     // libsu
-    implementation(libs.libsu.core)
+    // Exposed as `api` because BaseUtil's public API (execute overloads)
+    // references com.topjohnwu.superuser.Shell.
+    api(libs.libsu.core)
 
     // zip4j
     implementation(libs.zip4j)
