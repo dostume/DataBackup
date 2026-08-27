@@ -68,7 +68,15 @@ class WebDAVClientImpl(private val entity: CloudEntity, private val extra: WebDA
         }
 
         client = OkHttpSardine(builder.build()).apply {
-            setCredentials(entity.user, entity.pass)
+            // Preemptive auth: send the Authorization header with every
+            // request (PROPFIND/MKCOL/PUT/...). Servers that require auth to
+            // list directories would otherwise answer 401 and hide the
+            // remote tree (upstream issue #433).
+            if (entity.user.isEmpty()) {
+                setCredentials(entity.user, entity.pass)
+            } else {
+                setCredentials(entity.user, entity.pass, true)
+            }
             list(entity.host)
         }
     }
