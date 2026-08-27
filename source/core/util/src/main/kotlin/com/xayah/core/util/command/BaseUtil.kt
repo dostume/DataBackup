@@ -32,7 +32,6 @@ import net.lingala.zip4j.ZipFile
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.io.OutputStream
 import java.util.concurrent.TimeUnit
 
 private class EnvInitializer : Shell.Initializer() {
@@ -91,33 +90,6 @@ object BaseUtil {
                 shellResult.code = result.code
                 shellResult.out = outList
             }
-        }
-
-        if (log) {
-            if (shellResult.outString.trim().isNotEmpty())
-                log { TAG_SHELL_OUT to shellResult.outString }
-            log { TAG_SHELL_CODE to shellResult.code.toString() }
-        }
-
-        shellResult
-    }
-
-    /**
-     * Executes [command] while streaming its stdout into [outputStream].
-     *
-     * Unlike [execute], stdout is not buffered in memory, which allows large
-     * backup streams to be split and uploaded on the fly.
-     */
-    suspend fun executeToStream(command: String, outputStream: OutputStream, log: Boolean = true): ShellResult = withIOContext {
-        val shellResult = ShellResult(code = -1, input = listOf(command), out = listOf())
-
-        if (log) {
-            log { TAG_SHELL_IN to shellResult.inputString }
-        }
-
-        Shell.cmd(command).to(outputStream).exec().also { result ->
-            shellResult.code = result.code
-            shellResult.out = result.out
         }
 
         if (log) {
