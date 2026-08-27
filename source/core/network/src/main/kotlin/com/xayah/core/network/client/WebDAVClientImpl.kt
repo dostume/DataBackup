@@ -18,6 +18,7 @@ import com.xayah.libpickyou.parcelables.FileParcelable
 import com.xayah.libpickyou.ui.model.PickerType
 import com.xayah.libsardine.DavResource
 import com.xayah.libsardine.impl.OkHttpSardine
+import com.xayah.libsardine.impl.SardineException
 import okhttp3.OkHttpClient
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -90,13 +91,22 @@ class WebDAVClientImpl(private val entity: CloudEntity, private val extra: WebDA
         client.createDirectory(getPath(dst))
     }
 
-    override fun mkdirRecursively(dst: String) = withClient { client ->
+    override fun mkdirRecursively(dst: String) = withClient { _ ->
         val dirs = dst.split("/")
         var currentDir = ""
         for (i in dirs) {
+            if (i.isEmpty()) continue
             currentDir += "/$i"
             currentDir = currentDir.trimStart('/')
-            if (client.exists(getPath(currentDir)).not()) mkdir(currentDir)
+            if (exists(currentDir).not()) {
+                runCatching { mkdir(currentDir) }.onFailure { e ->
+                    if ((e as? SardineException)?.statusCode == 405) {
+                        log { "mkdirRecursively: ${getPath(currentDir)} already exists (405), continue" }
+                    } else {
+                        throw e
+                    }
+                }
+            }
         }
     }
 
@@ -107,6 +117,7 @@ class WebDAVClientImpl(private val entity: CloudEntity, private val extra: WebDA
 
     override fun upload(src: String, dst: String, onUploading: (read: Long, total: Long) -> Unit) = withClient { client ->
         val name = PathUtil.getFileName(src)
+        if (name.isEmpty()) throw IllegalArgumentException("Upload source path is empty or ends with a slash: $src")
         val dstPath = "${getPath(dst)}/$name"
         log { "upload: $src to $dstPath" }
         val srcFile = File(src)
@@ -207,7 +218,21 @@ class WebDAVClientImpl(private val entity: CloudEntity, private val extra: WebDA
         return pathParcelableList
     }
 
-    override fun exists(src: String): Boolean = runCatching { withClient { client -> client.list(getPath(src)) } }.isSuccess
+    override fun exists(src: String): Boolean = runCatching {
+        withClient { client -> client.list(getPath(src)) }
+    }.let { result ->
+        if (result.isSuccess) {
+            true
+        } else {
+            val e = result.exceptionOrNull()!!
+            if ((e as? SardineException)?.statusCode == 405) {
+                log { "exists: ${getPath(src)} returned 405, treating as true" }
+                true
+            } else {
+                false
+            }
+        }
+    }
 
     private fun sizeRecursively(src: String): Long {
         var size = 0L
