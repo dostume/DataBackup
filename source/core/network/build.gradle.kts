@@ -39,5 +39,7 @@ dependencies {
     implementation(libs.sardine.next)
 
     // PickYou
-    implementation(libs.pickyou)
+    // Exposed as `api` because CloudClient's public API returns
+    // DirChildrenParcelable from com.xayah.libpickyou.
+    api(libs.pickyou)
 }
