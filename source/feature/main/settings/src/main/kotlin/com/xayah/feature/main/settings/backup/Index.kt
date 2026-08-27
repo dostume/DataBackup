@@ -42,6 +42,7 @@ import com.xayah.core.ui.component.LocalSlotScope
 import com.xayah.core.ui.component.Selectable
 import com.xayah.core.ui.component.Slideable
 import com.xayah.core.ui.component.Switchable
+import com.xayah.core.ui.component.edit
 import com.xayah.core.ui.component.select
 import com.xayah.core.ui.model.DialogRadioItem
 import com.xayah.core.ui.token.SizeTokens
