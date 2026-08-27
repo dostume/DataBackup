@@ -21,6 +21,13 @@ dependencies {
     implementation(project(":core:network"))
     compileOnly(project(":core:hiddenapi"))
 
+    // libsu — VolumeBackupUtil calls BaseUtil.execute whose signature references
+    // com.topjohnwu.superuser.Shell, so this module needs the type on its classpath.
+    implementation(libs.libsu.core)
+
+    // PickYou — CloudClient.listFiles returns com.xayah.libpickyou.parcelables.DirChildrenParcelable.
+    implementation(libs.pickyou)
+
     // Gson
     implementation(libs.gson)
 
