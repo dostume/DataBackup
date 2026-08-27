@@ -40,14 +40,14 @@ fun parseVolumePartFileName(fileName: String): VolumePartInfo? {
  * Strips the volume part suffix from an archive extension.
  * "tar.zst.part00001" -> "tar.zst", "tar.zst" -> "tar.zst".
  */
-fun extensionWithoutVolume(extension: String): String = extension.substringBeforeLast(".$VOLUME_PART_TAG")
+fun String.extensionWithoutVolume(): String = substringBeforeLast(".$VOLUME_PART_TAG")
 
 /**
- * Returns the volume index if [extension] ends with a volume part tag, otherwise -1.
+ * Returns the volume index if this extension ends with a volume part tag, otherwise -1.
  */
-fun volumePartIndex(extension: String): Int {
+fun String.volumePartIndex(): Int {
     val tag = ".$VOLUME_PART_TAG"
-    val tagIndex = extension.lastIndexOf(tag)
+    val tagIndex = lastIndexOf(tag)
     if (tagIndex < 0) return -1
-    return extension.substring(tagIndex + tag.length).toIntOrNull() ?: -1
+    return substring(tagIndex + tag.length).toIntOrNull() ?: -1
 }
