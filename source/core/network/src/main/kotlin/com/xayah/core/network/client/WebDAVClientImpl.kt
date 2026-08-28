@@ -114,7 +114,20 @@ class WebDAVClientImpl(private val entity: CloudEntity, private val extra: WebDA
             if (exists(currentDir).not()) {
                 runCatching { mkdir(currentDir) }.onFailure { e ->
                     if (e.isAlreadyExistsException()) {
-                        log { "mkdirRecursively: ${getPath(currentDir)} already exists (${e.localizedMessage}), continue" }
+                        // 405/409 can mean "already exists" on some servers, but it
+                        // can also mean the server refuses directory creation
+                        // entirely (e.g. a read-only WebDAV, or AList mounted with
+                        // an unsupported backend). Confirm with a PROPFIND before
+                        // treating it as success, otherwise the mistake surfaces
+                        // later as confusing PUT 405 errors.
+                        if (exists(currentDir)) {
+                            log { "mkdirRecursively: ${getPath(currentDir)} already exists (${e.localizedMessage}), continue" }
+                        } else {
+                            throw IOException("Cannot create directory ${getPath(currentDir)}: ${e.localizedMessage}. " +
+                                "The WebDAV server rejected MKCOL (HTTP 405/409) and the directory does not exist, " +
+                                "which usually means the server does not support directory creation " +
+                                "(e.g. AList mounted with a read-only or unsupported backend).")
+                        }
                     } else {
                         throw e
                     }
@@ -140,7 +153,14 @@ class WebDAVClientImpl(private val entity: CloudEntity, private val extra: WebDA
             }
         }
         val srcFile = File(src)
-        client.put(dstPath, srcFile, null)
+        runCatching { client.put(dstPath, srcFile, null) }.onFailure { e ->
+            if (e.isAlreadyExistsException()) {
+                log { "upload: server rejected uploading to $dstPath (${e.localizedMessage}). " +
+                    "HTTP 405 on PUT usually means the WebDAV server does not allow writes " +
+                    "(e.g. AList mounted with a read-only or unsupported backend like 中国移动云盘)." }
+            }
+            throw e
+        }
     }
 
     override fun download(src: String, dst: String, onDownloading: (written: Long, total: Long) -> Unit) = withClient { client ->
@@ -248,6 +268,7 @@ class WebDAVClientImpl(private val entity: CloudEntity, private val extra: WebDA
                 log { "exists: ${getPath(src)} returned ${e.localizedMessage}, treating as true" }
                 true
             } else {
+                log { "exists: ${getPath(src)} failed with ${e.localizedMessage}" }
                 false
             }
         }
