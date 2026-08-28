@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.Icon
@@ -21,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.xayah.core.ui.R
@@ -265,7 +267,7 @@ suspend inline fun <reified T> DialogState.select(title: String, defIndex: Int =
     contentHorizontalPadding = false,
     block = { uiState ->
         var selectedIndex by remember { mutableIntStateOf(defIndex) }
-        LazyColumn(modifier = Modifier.selectableGroup()) {
+        LazyColumn(modifier = Modifier.selectableGroup().heightIn(max = 360.dp)) {
             items(items.size) {
                 RadioItem(selected = selectedIndex == it, title = items[it].title, desc = items[it].desc) {
                     selectedIndex = it
@@ -285,7 +287,7 @@ suspend inline fun <reified T> DialogState.select(title: String, def: List<Boole
     contentHorizontalPadding = false,
     block = { uiState ->
         var checkedList by remember { mutableStateOf(def) }
-        LazyColumn {
+        LazyColumn(modifier = Modifier.heightIn(max = 360.dp)) {
             items(items.size) {
                 CheckBoxItem(checked = checkedList[it], title = items[it].title, desc = items[it].desc) {
                     val tmp = checkedList.toMutableList()

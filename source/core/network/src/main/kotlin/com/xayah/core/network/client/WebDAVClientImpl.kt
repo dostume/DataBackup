@@ -21,6 +21,7 @@ import com.xayah.libsardine.impl.OkHttpSardine
 import com.xayah.libsardine.impl.SardineException
 import okhttp3.OkHttpClient
 import java.io.File
+import java.io.IOException
 import java.util.concurrent.TimeUnit
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
@@ -34,6 +35,18 @@ class WebDAVClientImpl(private val entity: CloudEntity, private val extra: WebDA
     private fun log(msg: () -> String): String = run {
         LogUtil.log { "WebDAVClientImpl" to msg() }
         msg()
+    }
+
+    /**
+     * Some WebDAV servers (notably AList mounted backends) reply 405 or 409
+     * when asked to create/list a directory that already exists. Treat those
+     * codes as "the path exists" instead of a fatal error.
+     */
+    private fun Throwable.isAlreadyExistsException(): Boolean {
+        val code = (this as? SardineException)?.statusCode
+        if (code == 405 || code == 409) return true
+        val msg = localizedMessage ?: message ?: return false
+        return msg.contains("405") || msg.contains("409")
     }
 
     private fun getPath(path: String) = "${entity.host.trimEnd('/')}/${path.trimStart('/')}"
@@ -100,8 +113,8 @@ class WebDAVClientImpl(private val entity: CloudEntity, private val extra: WebDA
             currentDir = currentDir.trimStart('/')
             if (exists(currentDir).not()) {
                 runCatching { mkdir(currentDir) }.onFailure { e ->
-                    if ((e as? SardineException)?.statusCode == 405) {
-                        log { "mkdirRecursively: ${getPath(currentDir)} already exists (405), continue" }
+                    if (e.isAlreadyExistsException()) {
+                        log { "mkdirRecursively: ${getPath(currentDir)} already exists (${e.localizedMessage}), continue" }
                     } else {
                         throw e
                     }
@@ -120,6 +133,12 @@ class WebDAVClientImpl(private val entity: CloudEntity, private val extra: WebDA
         if (name.isEmpty()) throw IllegalArgumentException("Upload source path is empty or ends with a slash: $src")
         val dstPath = "${getPath(dst)}/$name"
         log { "upload: $src to $dstPath" }
+        val parent = PathUtil.getParentPath(dstPath.removePrefix(entity.host.trimEnd('/')))
+        if (parent.isNotEmpty()) {
+            runCatching { mkdirRecursively(parent) }.onFailure {
+                log { "upload: failed to ensure parent dir $parent: ${it.localizedMessage}" }
+            }
+        }
         val srcFile = File(src)
         client.put(dstPath, srcFile, null)
     }
@@ -225,8 +244,8 @@ class WebDAVClientImpl(private val entity: CloudEntity, private val extra: WebDA
             true
         } else {
             val e = result.exceptionOrNull()!!
-            if ((e as? SardineException)?.statusCode == 405) {
-                log { "exists: ${getPath(src)} returned 405, treating as true" }
+            if (e.isAlreadyExistsException()) {
+                log { "exists: ${getPath(src)} returned ${e.localizedMessage}, treating as true" }
                 true
             } else {
                 false
