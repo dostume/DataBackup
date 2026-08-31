@@ -1,0 +1,780 @@
+2026-08-28 10:35:07.087    Common        Version:    2.0.12
+2026-08-28 10:35:07.088    Common        Model:      PJX110
+2026-08-28 10:35:07.089    Common        ABIs:       arm64-v8a
+2026-08-28 10:35:07.089    Common        SDK:        35
+2026-08-28 10:35:07.153    Common        Global Namespace:     mnt:[4026532880]
+2026-08-28 10:35:07.162    Common        Namespace:            mnt:[4026532880]
+2026-08-28 10:35:07.171    Common        SU:                   3.2.5:KernelSU
+2026-08-28 10:35:07.173    Common        $PATH:                /data/user/0/com.xayah.databackup.foss/files/bin:/product/bin:/apex/com.android.runtime/bin:/apex/com.android.art/bin:/system_ext/bin:/system/bin:/system/xbin:/odm/bin:/vendor/bin:/vendor/xbin:/data/adb/ksu/bin
+2026-08-28 10:35:07.174    Common        $HOME:                /data/user/0/com.xayah.databackup.foss/files
+2026-08-28 10:35:07.209    SHELL_IN      ps -A | grep -w com.xayah.databackup.foss:root:daemon | awk 'NF>1{print $1}' | xargs kill -9
+2026-08-28 10:35:07.248    SHELL_OUT     kill: bad pid '15251': No such process
+2026-08-28 10:35:07.249    SHELL_CODE    123
+2026-08-28 10:35:10.987    RemoteRootService    Service is null, trying to bind: 0.
+2026-08-28 10:35:11.989    RemoteRootService    Trying to destroy the service...
+2026-08-28 10:35:11.991    RemoteRootService    Trying to bind the service...
+2026-08-28 10:35:12.451    SHELL_IN      mount | awk '$3 ~ "/mnt/media_rw/[^/]+$" {print $3}'
+2026-08-28 10:35:12.492    SHELL_CODE    0
+2026-08-28 10:53:07.733    BackupServiceCloudImpl    Preprocessing is starting.
+2026-08-28 10:53:07.757    SHELL_IN      settings get secure default_input_method
+2026-08-28 10:53:07.834    SHELL_OUT     com.baidu.input/.ImeService
+2026-08-28 10:53:07.835    SHELL_CODE    0
+2026-08-28 10:53:07.836    SHELL_IN      settings get secure enabled_accessibility_services
+2026-08-28 10:53:07.868    SHELL_CODE    0
+2026-08-28 10:53:07.869    BackupServiceCloudImpl    InputMethods: com.baidu.input/.ImeService.
+2026-08-28 10:53:07.870    BackupServiceCloudImpl    AccessibilityServices: .
+2026-08-28 10:53:07.871    BackupServiceCloudImpl    Trying to create: /data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps.
+2026-08-28 10:53:07.871    BackupServiceCloudImpl    Trying to create: /data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/configs.
+2026-08-28 10:53:07.925    BackupServiceCloudImpl    Trying to create: cmcc/测试/apps.
+2026-08-28 10:53:07.932    BackupServiceCloudImpl    Trying to create: cmcc/测试/configs.
+2026-08-28 10:53:08.536    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:53:08.544    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:53:09.221    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:53:10.967    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:53:11.554    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps
+2026-08-28 10:53:12.703    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps (409 Conflict)), continue
+2026-08-28 10:53:13.255    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:53:13.270    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:53:13.857    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:53:15.667    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:53:16.273    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/configs
+2026-08-28 10:53:17.478    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/configs already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/configs (409 Conflict)), continue
+2026-08-28 10:53:17.505    BackupServiceCloudImpl    Processing is starting.
+2026-08-28 10:53:17.548    BackupServiceCloudImpl    Task count: 1.
+2026-08-28 10:53:17.550    BackupServiceCloudImpl    Kill app option: OPTION_II
+2026-08-28 10:53:17.558    BackupServiceCloudImpl    Current package: PackageEntity(id=33, indexInfo=PackageIndexInfo(opType=BACKUP, packageName=com.tencent.mm, userId=0, compressionType=ZSTD, preserveId=0, cloud=, backupDir=), packageInfo=PackageInfo(label=微信, versionName=8.0.76, versionCode=3141, flags=949501508, firstInstallTime=1758959630044, lastUpdateTime=1787813822400), extraInfo=PackageExtraInfo(uid=10304, hasKeystore=false, permissions=[PackagePermission(name=android.permission.INTERACT_ACROSS_USERS, isGranted=false, op=-1, mode=null), PackagePermission(name=android.permission.NEARBY_WIFI_DEVICES, isGranted=false, op=116, mode=null), PackagePermission(name=android.permission.ACCESS_COARSE_LOCATION, isGranted=true, op=0, mode=0), PackagePermission(name=android.permission.ACCESS_FINE_LOCATION, isGranted=true, op=1, mode=0), PackagePermission(name=android.permission.CAMERA, isGranted=true, op=26, mode=0), PackagePermission(name=android.permission.RECORD_AUDIO, isGranted=true, op=27, mode=0), PackagePermission(name=android.permission.READ_CONTACTS, isGranted=false, op=4, mode=null), PackagePermission(name=android.permission.READ_MEDIA_IMAGES, isGranted=true, op=85, mode=0), PackagePermission(name=android.permission.READ_MEDIA_VIDEO, isGranted=true, op=83, mode=0), PackagePermission(name=android.permission.READ_MEDIA_VISUAL_USER_SELECTED, isGranted=true, op=123, mode=0), PackagePermission(name=android.permission.BLUETOOTH_SCAN, isGranted=true, op=77, mode=0), PackagePermission(name=android.permission.BLUETOOTH_ADVERTISE, isGranted=true, op=114, mode=null), PackagePermission(name=android.permission.BLUETOOTH_CONNECT, isGranted=true, op=111, mode=0), PackagePermission(name=android.permission.SYSTEM_ALERT_WINDOW, isGranted=false, op=24, mode=0), PackagePermission(name=android.permission.POST_NOTIFICATIONS, isGranted=true, op=11, mode=null), PackagePermission(name=android.permission.ACTIVITY_RECOGNITION, isGranted=true, op=79, mode=0), PackagePermission(name=android.permission.READ_EXTERNAL_STORAGE, isGranted=true, op=59, mode=null), PackagePermission(name=android.permission.FOREGROUND_SERVICE, isGranted=true, op=76, mode=0), PackagePermission(name=android.permission.REQUEST_INSTALL_PACKAGES, isGranted=false, op=66, mode=null), PackagePermission(name=android.permission.USE_FULL_SCREEN_INTENT, isGranted=true, op=133, mode=3), PackagePermission(name=android.permission.ACCESS_MEDIA_LOCATION, isGranted=true, op=90, mode=0), PackagePermission(name=android.permission.SCHEDULE_EXACT_ALARM, isGranted=false, op=107, mode=null)], ssaid=aa43d92a6a137001, lastBackupTime=0, blocked=false, activated=true, firstUpdated=true, enabled=true), dataStates=PackageDataStates(apkState=Selected, userState=Selected, userDeState=Selected, dataState=Selected, obbState=Selected, mediaState=Selected, permissionState=Selected, ssaidState=Selected), storageStats=PackageStorageStats(appBytes=838272512, cacheBytes=4608712704, dataBytes=27922206720, externalCacheBytes=4096), dataStats=PackageDataStats(apkBytes=0, userBytes=0, userDeBytes=0, dataBytes=0, obbBytes=0, mediaBytes=0), displayStats=PackageDataStats(apkBytes=0, userBytes=0, userDeBytes=0, dataBytes=0, obbBytes=0, mediaBytes=0))
+2026-08-28 10:53:17.559    BackupServiceCloudImpl    Trying to kill com.tencent.mm.
+2026-08-28 10:53:18.202    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:53:18.213    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:53:18.687    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:53:20.239    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:53:20.865    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps
+2026-08-28 10:53:21.930    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps (409 Conflict)), continue
+2026-08-28 10:53:22.459    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm
+2026-08-28 10:53:23.531    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.tencent.mm (409 Conflict)), continue
+2026-08-28 10:53:24.123    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm/user_0
+2026-08-28 10:53:25.248    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm/user_0 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.tencent.mm/user_0 (409 Conflict)), continue
+2026-08-28 10:53:25.255    PackagesBackupUtil    Backing up apk...
+2026-08-28 10:53:25.298    SHELL_IN      cd /data/app/~~DluP-M1WOxnPRBNIJO2n_g==/com.tencent.mm-f10ZiGEIa8T4CygUxKjWXw==
+2026-08-28 10:53:25.302    SHELL_CODE    0
+2026-08-28 10:53:25.303    SHELL_IN      tar --totals -cpf - ./*.apk | zstd -r -T0 --ultra -q --priority=rt -1 > "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.tencent.mm/user_0/apk.tar.zst"
+2026-08-28 10:53:25.785    SHELL_OUT     Total bytes written: 266106880 (254MiB, 587MiB/s)
+2026-08-28 10:53:25.786    SHELL_CODE    0
+2026-08-28 10:53:25.787    SHELL_IN      cd /
+2026-08-28 10:53:25.789    SHELL_CODE    0
+2026-08-28 10:53:25.793    SHELL_IN      zstd -d -c "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.tencent.mm/user_0/apk.tar.zst" | tar -tf - > /dev/null 2>&1
+2026-08-28 10:53:25.945    SHELL_CODE    0
+2026-08-28 10:53:25.946    CommonBackupUtil    Everything seems fine.
+2026-08-28 10:53:25.968    CloudRepository    Uploading...
+2026-08-28 10:53:25.970    SHELL_IN      ls -Zd "/data/user/0/com.xayah.databackup.foss/files" | awk 'NF>1{print $1}'
+2026-08-28 10:53:26.005    SHELL_OUT     u:object_r:app_data_file:s0:c226,c257,c512,c768
+2026-08-28 10:53:26.006    SHELL_CODE    0
+2026-08-28 10:53:26.007    SHELL_IN      chcon -hR "u:object_r:app_data_file:s0:c226,c257,c512,c768" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:53:26.024    SHELL_CODE    0
+2026-08-28 10:53:26.025    SHELL_IN      chown -hR "10482:10482" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:53:26.040    SHELL_CODE    0
+2026-08-28 10:53:26.041    WebDAVClientImpl    upload: /data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.tencent.mm/user_0/apk.tar.zst to http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm/user_0/apk.tar.zst
+2026-08-28 10:53:26.667    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:53:26.676    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:53:27.217    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:53:28.913    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:53:29.541    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps
+2026-08-28 10:53:30.536    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps (409 Conflict)), continue
+2026-08-28 10:53:30.999    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm
+2026-08-28 10:53:32.118    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.tencent.mm (409 Conflict)), continue
+2026-08-28 10:53:32.728    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm/user_0
+2026-08-28 10:53:33.771    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm/user_0 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.tencent.mm/user_0 (409 Conflict)), continue
+2026-08-28 10:53:37.335    CloudRepository    com.xayah.libsardine.impl.SardineException: Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.tencent.mm/user_0/apk.tar.zst (405 Method Not Allowed)
+	at com.xayah.libsardine.impl.handler.ValidatingResponseHandler.validateResponse(ValidatingResponseHandler.java:32)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:2)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:3)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:25)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:8)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:17)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:16)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload$lambda$17(WebDAVClientImpl.kt:99)
+	at com.xayah.core.network.client.WebDAVClientImpl.p(WebDAVClientImpl.kt:1)
+	at com.xayah.core.network.client.S.invoke(R8$$SyntheticClass:18)
+	at com.xayah.core.network.client.WebDAVClientImpl.withClient(WebDAVClientImpl.kt:8)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload(WebDAVClientImpl.kt:22)
+	at com.xayah.core.data.repository.CloudRepository.upload(CloudRepository.kt:161)
+	at com.xayah.core.service.util.PackagesBackupUtil.upload(PackagesBackupUtil.kt:266)
+	at com.xayah.core.service.util.PackagesBackupUtil$upload$1.invokeSuspend(PackagesBackupUtil.kt:19)
+	at X4.a.resumeWith(ContinuationImpl.kt:9)
+	at p5.O.run(DispatchedTask.kt:115)
+	at u5.j$a.run(LimitedDispatcher.kt:8)
+	at w5.i.run(Tasks.kt:3)
+	at w5.a$a.run(CoroutineScheduler.kt:98)
+
+2026-08-28 10:53:37.509    PackagesBackupUtil    Backing up user...
+2026-08-28 10:53:37.530    PackagesBackupUtil    ExclusionList: ["com.tencent.mm/.ota", "com.tencent.mm/cache", "com.tencent.mm/lib", "com.tencent.mm/code_cache", "com.tencent.mm/no_backup"].
+2026-08-28 10:53:45.509    SHELL_IN      tar --totals --exclude="com.tencent.mm/.ota" --exclude="com.tencent.mm/cache" --exclude="com.tencent.mm/lib" --exclude="com.tencent.mm/code_cache" --exclude="com.tencent.mm/no_backup" -cpf - -C "/data/user/0" -- "com.tencent.mm" | zstd -r -T0 --ultra -q --priority=rt -1 > "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.tencent.mm/user_0/user.tar.zst"
+2026-08-28 10:56:04.144    SHELL_OUT     Total bytes written: 27521116160 (26GiB, 190MiB/s)
+2026-08-28 10:56:04.156    SHELL_CODE    0
+2026-08-28 10:56:04.176    SHELL_IN      zstd -d -c "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.tencent.mm/user_0/user.tar.zst" | tar -tf - > /dev/null 2>&1
+2026-08-28 10:56:24.797    SHELL_CODE    0
+2026-08-28 10:56:24.806    CommonBackupUtil    Everything seems fine.
+2026-08-28 10:56:24.900    CloudRepository    Uploading...
+2026-08-28 10:56:24.902    SHELL_IN      ls -Zd "/data/user/0/com.xayah.databackup.foss/files" | awk 'NF>1{print $1}'
+2026-08-28 10:56:24.949    SHELL_OUT     u:object_r:app_data_file:s0:c226,c257,c512,c768
+2026-08-28 10:56:24.952    SHELL_CODE    0
+2026-08-28 10:56:24.953    SHELL_IN      chcon -hR "u:object_r:app_data_file:s0:c226,c257,c512,c768" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:56:24.981    SHELL_CODE    0
+2026-08-28 10:56:24.982    SHELL_IN      chown -hR "10482:10482" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:56:24.994    SHELL_CODE    0
+2026-08-28 10:56:24.995    WebDAVClientImpl    upload: /data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.tencent.mm/user_0/user.tar.zst to http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm/user_0/user.tar.zst
+2026-08-28 10:56:25.807    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:56:25.815    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:56:26.332    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:56:27.938    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:56:28.421    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps
+2026-08-28 10:56:29.708    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps (409 Conflict)), continue
+2026-08-28 10:56:30.227    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm
+2026-08-28 10:56:31.451    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.tencent.mm (409 Conflict)), continue
+2026-08-28 10:56:32.039    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm/user_0
+2026-08-28 10:56:33.093    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm/user_0 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.tencent.mm/user_0 (409 Conflict)), continue
+2026-08-28 10:57:21.624    CloudRepository    com.xayah.libsardine.impl.SardineException: Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.tencent.mm/user_0/user.tar.zst (405 Method Not Allowed)
+	at com.xayah.libsardine.impl.handler.ValidatingResponseHandler.validateResponse(ValidatingResponseHandler.java:32)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:2)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:3)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:25)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:8)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:17)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:16)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload$lambda$17(WebDAVClientImpl.kt:99)
+	at com.xayah.core.network.client.WebDAVClientImpl.p(WebDAVClientImpl.kt:1)
+	at com.xayah.core.network.client.S.invoke(R8$$SyntheticClass:18)
+	at com.xayah.core.network.client.WebDAVClientImpl.withClient(WebDAVClientImpl.kt:8)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload(WebDAVClientImpl.kt:22)
+	at com.xayah.core.data.repository.CloudRepository.upload(CloudRepository.kt:161)
+	at com.xayah.core.service.util.PackagesBackupUtil.upload(PackagesBackupUtil.kt:266)
+	at com.xayah.core.service.util.PackagesBackupUtil$upload$1.invokeSuspend(PackagesBackupUtil.kt:19)
+	at X4.a.resumeWith(ContinuationImpl.kt:9)
+	at p5.O.run(DispatchedTask.kt:115)
+	at u5.j$a.run(LimitedDispatcher.kt:8)
+	at w5.i.run(Tasks.kt:3)
+	at w5.a$a.run(CoroutineScheduler.kt:98)
+
+2026-08-28 10:57:27.921    PackagesBackupUtil    Backing up user_de...
+2026-08-28 10:57:27.985    PackagesBackupUtil    ExclusionList: ["com.tencent.mm/.ota", "com.tencent.mm/cache", "com.tencent.mm/lib", "com.tencent.mm/code_cache", "com.tencent.mm/no_backup"].
+2026-08-28 10:57:28.005    SHELL_IN      tar --totals --exclude="com.tencent.mm/.ota" --exclude="com.tencent.mm/cache" --exclude="com.tencent.mm/lib" --exclude="com.tencent.mm/code_cache" --exclude="com.tencent.mm/no_backup" -cpf - -C "/data/user_de/0" -- "com.tencent.mm" | zstd -r -T0 --ultra -q --priority=rt -1 > "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.tencent.mm/user_0/user_de.tar.zst"
+2026-08-28 10:57:28.024    SHELL_OUT     Total bytes written: 10240 (10KiB, 5.8MiB/s)
+2026-08-28 10:57:28.025    SHELL_CODE    0
+2026-08-28 10:57:28.031    SHELL_IN      zstd -d -c "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.tencent.mm/user_0/user_de.tar.zst" | tar -tf - > /dev/null 2>&1
+2026-08-28 10:57:28.038    SHELL_CODE    0
+2026-08-28 10:57:28.039    CommonBackupUtil    Everything seems fine.
+2026-08-28 10:57:28.056    CloudRepository    Uploading...
+2026-08-28 10:57:28.058    SHELL_IN      ls -Zd "/data/user/0/com.xayah.databackup.foss/files" | awk 'NF>1{print $1}'
+2026-08-28 10:57:28.094    SHELL_OUT     u:object_r:app_data_file:s0:c226,c257,c512,c768
+2026-08-28 10:57:28.094    SHELL_CODE    0
+2026-08-28 10:57:28.095    SHELL_IN      chcon -hR "u:object_r:app_data_file:s0:c226,c257,c512,c768" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:57:28.132    SHELL_CODE    0
+2026-08-28 10:57:28.134    SHELL_IN      chown -hR "10482:10482" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:57:28.154    SHELL_CODE    0
+2026-08-28 10:57:28.156    WebDAVClientImpl    upload: /data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.tencent.mm/user_0/user_de.tar.zst to http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm/user_0/user_de.tar.zst
+2026-08-28 10:57:28.764    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:57:28.780    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:57:29.432    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:57:31.031    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:57:31.552    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps
+2026-08-28 10:57:32.727    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps (409 Conflict)), continue
+2026-08-28 10:57:33.195    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm
+2026-08-28 10:57:34.376    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.tencent.mm (409 Conflict)), continue
+2026-08-28 10:57:34.999    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm/user_0
+2026-08-28 10:57:36.105    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.tencent.mm/user_0 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.tencent.mm/user_0 (409 Conflict)), continue
+2026-08-28 10:57:39.220    CloudRepository    com.xayah.libsardine.impl.SardineException: Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.tencent.mm/user_0/user_de.tar.zst (405 Method Not Allowed)
+	at com.xayah.libsardine.impl.handler.ValidatingResponseHandler.validateResponse(ValidatingResponseHandler.java:32)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:2)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:3)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:25)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:8)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:17)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:16)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload$lambda$17(WebDAVClientImpl.kt:99)
+	at com.xayah.core.network.client.WebDAVClientImpl.p(WebDAVClientImpl.kt:1)
+	at com.xayah.core.network.client.S.invoke(R8$$SyntheticClass:18)
+	at com.xayah.core.network.client.WebDAVClientImpl.withClient(WebDAVClientImpl.kt:8)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload(WebDAVClientImpl.kt:22)
+	at com.xayah.core.data.repository.CloudRepository.upload(CloudRepository.kt:161)
+	at com.xayah.core.service.util.PackagesBackupUtil.upload(PackagesBackupUtil.kt:266)
+	at com.xayah.core.service.util.PackagesBackupUtil$upload$1.invokeSuspend(PackagesBackupUtil.kt:19)
+	at X4.a.resumeWith(ContinuationImpl.kt:9)
+	at p5.O.run(DispatchedTask.kt:115)
+	at u5.j$a.run(LimitedDispatcher.kt:8)
+	at w5.i.run(Tasks.kt:3)
+	at w5.a$a.run(CoroutineScheduler.kt:98)
+
+2026-08-28 10:57:39.242    PackagesBackupUtil    Backing up data...
+2026-08-28 10:57:39.260    PackagesBackupUtil    ExclusionList: ["com.tencent.mm/cache", "Backup_"*].
+2026-08-28 10:57:41.959    SHELL_IN      tar --totals --exclude="com.tencent.mm/cache" --exclude="Backup_"* -cpf - -C "/data/media/0/Android/data" -- "com.tencent.mm" | zstd -r -T0 --ultra -q --priority=rt -1 > "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.tencent.mm/user_0/data.tar.zst"
+2026-08-28 10:57:46.245    SHELL_IN      ps -A | grep -w tar | grep -w root | awk 'NF>1{print $1}' | xargs kill -9
+2026-08-28 10:57:46.297    SHELL_OUT     kill: bad pid '30011': No such process
+2026-08-28 10:57:46.298    SHELL_CODE    123
+2026-08-28 10:57:46.337    SHELL_OUT     Killed 
+2026-08-28 10:57:46.338    SHELL_CODE    137
+2026-08-28 10:57:46.342    SHELL_IN      zstd -d -c "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.tencent.mm/user_0/data.tar.zst" | tar -tf - > /dev/null 2>&1
+2026-08-28 10:57:47.189    SHELL_CODE    2
+2026-08-28 10:57:55.799    BackupServiceLocalImpl    Preprocessing is starting.
+2026-08-28 10:57:55.824    SHELL_IN      settings get secure default_input_method
+2026-08-28 10:57:55.886    SHELL_OUT     com.baidu.input/.ImeService
+2026-08-28 10:57:55.887    SHELL_CODE    0
+2026-08-28 10:57:55.888    SHELL_IN      settings get secure enabled_accessibility_services
+2026-08-28 10:57:55.942    SHELL_CODE    0
+2026-08-28 10:57:55.943    BackupServiceLocalImpl    InputMethods: com.baidu.input/.ImeService.
+2026-08-28 10:57:55.945    BackupServiceLocalImpl    AccessibilityServices: .
+2026-08-28 10:57:55.951    BackupServiceLocalImpl    Trying to create: /storage/emulated/0/DataBackup/apps.
+2026-08-28 10:57:55.954    BackupServiceLocalImpl    Trying to create: /storage/emulated/0/DataBackup/configs.
+2026-08-28 10:57:56.836    BackupServiceLocalImpl    Processing is starting.
+2026-08-28 10:57:56.881    BackupServiceLocalImpl    Task count: 1.
+2026-08-28 10:57:56.888    BackupServiceLocalImpl    Kill app option: OPTION_II
+2026-08-28 10:57:56.900    BackupServiceLocalImpl    Current package: PackageEntity(id=88, indexInfo=PackageIndexInfo(opType=BACKUP, packageName=com.aikuai.ecloud, userId=0, compressionType=ZSTD, preserveId=0, cloud=, backupDir=), packageInfo=PackageInfo(label=爱快iKuai, versionName=5.1.15, versionCode=310, flags=686341700, firstInstallTime=1774857015043, lastUpdateTime=1782264943365), extraInfo=PackageExtraInfo(uid=10027, hasKeystore=true, permissions=[PackagePermission(name=android.permission.REQUEST_INSTALL_PACKAGES, isGranted=false, op=66, mode=null), PackagePermission(name=android.permission.READ_MEDIA_IMAGES, isGranted=false, op=85, mode=null), PackagePermission(name=android.permission.READ_MEDIA_VIDEO, isGranted=false, op=83, mode=null), PackagePermission(name=android.permission.ACCESS_FINE_LOCATION, isGranted=false, op=1, mode=null), PackagePermission(name=android.permission.READ_EXTERNAL_STORAGE, isGranted=false, op=59, mode=null), PackagePermission(name=android.permission.WRITE_EXTERNAL_STORAGE, isGranted=false, op=60, mode=null), PackagePermission(name=android.permission.CAMERA, isGranted=false, op=26, mode=null), PackagePermission(name=android.permission.READ_PHONE_STATE, isGranted=false, op=51, mode=null), PackagePermission(name=android.permission.WRITE_SETTINGS, isGranted=false, op=23, mode=null), PackagePermission(name=android.permission.NEARBY_WIFI_DEVICES, isGranted=false, op=116, mode=null), PackagePermission(name=android.permission.ACCESS_BACKGROUND_LOCATION, isGranted=false, op=-1, mode=null), PackagePermission(name=android.permission.ACCESS_COARSE_LOCATION, isGranted=false, op=0, mode=null), PackagePermission(name=android.permission.SCHEDULE_EXACT_ALARM, isGranted=false, op=107, mode=null), PackagePermission(name=android.permission.POST_NOTIFICATIONS, isGranted=false, op=11, mode=null), PackagePermission(name=android.permission.READ_MEDIA_VISUAL_USER_SELECTED, isGranted=false, op=123, mode=null)], ssaid=0b3df04a1ee7082b, lastBackupTime=0, blocked=false, activated=true, firstUpdated=true, enabled=false), dataStates=PackageDataStates(apkState=Selected, userState=Selected, userDeState=Selected, dataState=Selected, obbState=Selected, mediaState=Selected, permissionState=Selected, ssaidState=Selected), storageStats=PackageStorageStats(appBytes=166745088, cacheBytes=3543040, dataBytes=9502720, externalCacheBytes=0), dataStats=PackageDataStats(apkBytes=0, userBytes=0, userDeBytes=0, dataBytes=0, obbBytes=0, mediaBytes=0), displayStats=PackageDataStats(apkBytes=0, userBytes=0, userDeBytes=0, dataBytes=0, obbBytes=0, mediaBytes=0))
+2026-08-28 10:57:56.904    BackupServiceLocalImpl    Trying to kill com.aikuai.ecloud.
+2026-08-28 10:57:56.989    PackagesBackupUtil    Backing up apk...
+2026-08-28 10:57:57.009    SHELL_IN      cd /data/app/~~esb_XPzDUYIBgKOLw-5nRw==/com.aikuai.ecloud--kNRpbWavlFkOEf0qxgHLA==
+2026-08-28 10:57:57.012    SHELL_CODE    0
+2026-08-28 10:57:57.012    SHELL_IN      tar --totals -cpf - ./*.apk | zstd -r -T0 --ultra -q --priority=rt -1 > "/storage/emulated/0/DataBackup/apps/com.aikuai.ecloud/user_0/apk.tar.zst"
+2026-08-28 10:57:57.280    SHELL_OUT     Total bytes written: 132147200 (127MiB, 508MiB/s)
+2026-08-28 10:57:57.281    SHELL_CODE    0
+2026-08-28 10:57:57.281    SHELL_IN      cd /
+2026-08-28 10:57:57.282    SHELL_CODE    0
+2026-08-28 10:57:57.283    SHELL_IN      zstd -d -c "/storage/emulated/0/DataBackup/apps/com.aikuai.ecloud/user_0/apk.tar.zst" | tar -tf - > /dev/null 2>&1
+2026-08-28 10:57:57.452    SHELL_CODE    0
+2026-08-28 10:57:57.454    CommonBackupUtil    Everything seems fine.
+2026-08-28 10:57:57.478    PackagesBackupUtil    Backing up user...
+2026-08-28 10:57:57.512    PackagesBackupUtil    ExclusionList: ["com.aikuai.ecloud/.ota", "com.aikuai.ecloud/cache", "com.aikuai.ecloud/lib", "com.aikuai.ecloud/code_cache", "com.aikuai.ecloud/no_backup"].
+2026-08-28 10:57:57.570    SHELL_IN      tar --totals --exclude="com.aikuai.ecloud/.ota" --exclude="com.aikuai.ecloud/cache" --exclude="com.aikuai.ecloud/lib" --exclude="com.aikuai.ecloud/code_cache" --exclude="com.aikuai.ecloud/no_backup" -cpf - -C "/data/user/0" -- "com.aikuai.ecloud" | zstd -r -T0 --ultra -q --priority=rt -1 > "/storage/emulated/0/DataBackup/apps/com.aikuai.ecloud/user_0/user.tar.zst"
+2026-08-28 10:57:57.637    SHELL_OUT     Total bytes written: 5816320 (5.6MiB, 110MiB/s)
+2026-08-28 10:57:57.639    SHELL_CODE    0
+2026-08-28 10:57:57.645    SHELL_IN      zstd -d -c "/storage/emulated/0/DataBackup/apps/com.aikuai.ecloud/user_0/user.tar.zst" | tar -tf - > /dev/null 2>&1
+2026-08-28 10:57:57.669    SHELL_CODE    0
+2026-08-28 10:57:57.670    CommonBackupUtil    Everything seems fine.
+2026-08-28 10:57:57.697    PackagesBackupUtil    Backing up user_de...
+2026-08-28 10:57:57.726    PackagesBackupUtil    ExclusionList: ["com.aikuai.ecloud/.ota", "com.aikuai.ecloud/cache", "com.aikuai.ecloud/lib", "com.aikuai.ecloud/code_cache", "com.aikuai.ecloud/no_backup"].
+2026-08-28 10:57:57.748    SHELL_IN      tar --totals --exclude="com.aikuai.ecloud/.ota" --exclude="com.aikuai.ecloud/cache" --exclude="com.aikuai.ecloud/lib" --exclude="com.aikuai.ecloud/code_cache" --exclude="com.aikuai.ecloud/no_backup" -cpf - -C "/data/user_de/0" -- "com.aikuai.ecloud" | zstd -r -T0 --ultra -q --priority=rt -1 > "/storage/emulated/0/DataBackup/apps/com.aikuai.ecloud/user_0/user_de.tar.zst"
+2026-08-28 10:57:57.765    SHELL_OUT     Total bytes written: 10240 (10KiB, 2.5MiB/s)
+2026-08-28 10:57:57.766    SHELL_CODE    0
+2026-08-28 10:57:57.771    SHELL_IN      zstd -d -c "/storage/emulated/0/DataBackup/apps/com.aikuai.ecloud/user_0/user_de.tar.zst" | tar -tf - > /dev/null 2>&1
+2026-08-28 10:57:57.778    SHELL_CODE    0
+2026-08-28 10:57:57.778    CommonBackupUtil    Everything seems fine.
+2026-08-28 10:57:57.793    PackagesBackupUtil    Backing up data...
+2026-08-28 10:57:57.806    PackagesBackupUtil    ExclusionList: ["com.aikuai.ecloud/cache", "Backup_"*].
+2026-08-28 10:57:57.824    SHELL_IN      tar --totals --exclude="com.aikuai.ecloud/cache" --exclude="Backup_"* -cpf - -C "/data/media/0/Android/data" -- "com.aikuai.ecloud" | zstd -r -T0 --ultra -q --priority=rt -1 > "/storage/emulated/0/DataBackup/apps/com.aikuai.ecloud/user_0/data.tar.zst"
+2026-08-28 10:57:57.840    SHELL_OUT     Total bytes written: 10240 (10KiB, 31MiB/s)
+2026-08-28 10:57:57.841    SHELL_CODE    0
+2026-08-28 10:57:57.845    SHELL_IN      zstd -d -c "/storage/emulated/0/DataBackup/apps/com.aikuai.ecloud/user_0/data.tar.zst" | tar -tf - > /dev/null 2>&1
+2026-08-28 10:57:57.855    SHELL_CODE    0
+2026-08-28 10:57:57.856    CommonBackupUtil    Everything seems fine.
+2026-08-28 10:57:57.875    PackagesBackupUtil    Backing up obb...
+2026-08-28 10:57:57.889    PackagesBackupUtil    ExclusionList: ["com.aikuai.ecloud/cache", "Backup_"*].
+2026-08-28 10:57:57.913    SHELL_IN      tar --totals --exclude="com.aikuai.ecloud/cache" --exclude="Backup_"* -cpf - -C "/data/media/0/Android/obb" -- "com.aikuai.ecloud" | zstd -r -T0 --ultra -q --priority=rt -1 > "/storage/emulated/0/DataBackup/apps/com.aikuai.ecloud/user_0/obb.tar.zst"
+2026-08-28 10:57:57.925    SHELL_OUT     Total bytes written: 10240 (10KiB, 47MiB/s)
+2026-08-28 10:57:57.925    SHELL_CODE    0
+2026-08-28 10:57:57.928    SHELL_IN      zstd -d -c "/storage/emulated/0/DataBackup/apps/com.aikuai.ecloud/user_0/obb.tar.zst" | tar -tf - > /dev/null 2>&1
+2026-08-28 10:57:57.937    SHELL_CODE    0
+2026-08-28 10:57:57.939    CommonBackupUtil    Everything seems fine.
+2026-08-28 10:57:57.975    PackagesBackupUtil    Backing up media...
+2026-08-28 10:57:58.002    PackagesBackupUtil    Not exist and skip: /data/media/0/Android/media/com.aikuai.ecloud
+2026-08-28 10:57:58.013    PackagesBackupUtil    Backing up permissions...
+2026-08-28 10:57:58.061    PackagesBackupUtil    Permissions size: 15...
+2026-08-28 10:57:58.064    PackagesBackupUtil    Permission name: android.permission.REQUEST_INSTALL_PACKAGES, isGranted: false, op: 66, mode: null
+2026-08-28 10:57:58.065    PackagesBackupUtil    Permission name: android.permission.READ_MEDIA_IMAGES, isGranted: false, op: 85, mode: null
+2026-08-28 10:57:58.066    PackagesBackupUtil    Permission name: android.permission.READ_MEDIA_VIDEO, isGranted: false, op: 83, mode: null
+2026-08-28 10:57:58.066    PackagesBackupUtil    Permission name: android.permission.ACCESS_FINE_LOCATION, isGranted: false, op: 1, mode: null
+2026-08-28 10:57:58.068    PackagesBackupUtil    Permission name: android.permission.READ_EXTERNAL_STORAGE, isGranted: false, op: 59, mode: null
+2026-08-28 10:57:58.069    PackagesBackupUtil    Permission name: android.permission.WRITE_EXTERNAL_STORAGE, isGranted: false, op: 60, mode: null
+2026-08-28 10:57:58.069    PackagesBackupUtil    Permission name: android.permission.CAMERA, isGranted: false, op: 26, mode: null
+2026-08-28 10:57:58.070    PackagesBackupUtil    Permission name: android.permission.READ_PHONE_STATE, isGranted: false, op: 51, mode: null
+2026-08-28 10:57:58.071    PackagesBackupUtil    Permission name: android.permission.WRITE_SETTINGS, isGranted: false, op: 23, mode: null
+2026-08-28 10:57:58.071    PackagesBackupUtil    Permission name: android.permission.NEARBY_WIFI_DEVICES, isGranted: false, op: 116, mode: null
+2026-08-28 10:57:58.071    PackagesBackupUtil    Permission name: android.permission.ACCESS_BACKGROUND_LOCATION, isGranted: false, op: -1, mode: null
+2026-08-28 10:57:58.072    PackagesBackupUtil    Permission name: android.permission.ACCESS_COARSE_LOCATION, isGranted: false, op: 0, mode: null
+2026-08-28 10:57:58.072    PackagesBackupUtil    Permission name: android.permission.SCHEDULE_EXACT_ALARM, isGranted: false, op: 107, mode: null
+2026-08-28 10:57:58.073    PackagesBackupUtil    Permission name: android.permission.POST_NOTIFICATIONS, isGranted: false, op: 11, mode: null
+2026-08-28 10:57:58.073    PackagesBackupUtil    Permission name: android.permission.READ_MEDIA_VISUAL_USER_SELECTED, isGranted: false, op: 123, mode: null
+2026-08-28 10:57:58.074    PackagesBackupUtil    Backing up ssaid...
+2026-08-28 10:57:58.098    PackagesBackupUtil    Ssaid: 0b3df04a1ee7082b
+2026-08-28 10:57:58.166    BackupServiceLocalImpl    PostProcessing is starting.
+2026-08-28 10:57:58.179    BackupServiceLocalImpl    Backup itself enabled.
+2026-08-28 10:57:58.180    CommonBackupUtil    Backing up itself...
+2026-08-28 10:57:58.247    CommonBackupUtil    Copied from /data/app/~~v2sHgsN6VFBzI8OR8DcS2w==/com.xayah.databackup.foss-xVb9G_qTJsKMT2blXesLmw==/base.apk to /storage/emulated/0/DataBackup/DataBackup.apk.
+2026-08-28 10:57:59.197    PackagesBackupUtil    Backing up icons...
+2026-08-28 10:57:59.205    SHELL_IN      tar --totals -cpf - -C "/data/user/0/com.xayah.databackup.foss/files" -- "icon" > "/storage/emulated/0/DataBackup/configs/icon.tar"
+2026-08-28 10:57:59.267    SHELL_OUT     Total bytes written: 6051840 (5.8MiB, 116MiB/s)
+2026-08-28 10:57:59.267    SHELL_CODE    0
+2026-08-28 10:57:59.269    SHELL_IN      tar -tf "/storage/emulated/0/DataBackup/configs/icon.tar" > /dev/null 2>&1
+2026-08-28 10:57:59.275    SHELL_CODE    0
+2026-08-28 10:57:59.276    CommonBackupUtil    Everything seems fine.
+2026-08-28 10:58:00.213    BackupServiceLocalImpl    Backup configs enabled.
+2026-08-28 10:58:00.216    CommonBackupUtil    Backing up configs...
+2026-08-28 10:58:00.244    SHELL_IN      ime enable "com.baidu.input/.ImeService"
+2026-08-28 10:58:00.282    SHELL_OUT     Input method com.baidu.input/.ImeService: already enabled for user #0
+2026-08-28 10:58:00.282    SHELL_CODE    0
+2026-08-28 10:58:00.285    SHELL_IN      ime set "com.baidu.input/.ImeService"
+2026-08-28 10:58:00.323    SHELL_OUT     Input method com.baidu.input/.ImeService selected for user #0
+2026-08-28 10:58:00.324    SHELL_CODE    0
+2026-08-28 10:58:00.324    SHELL_IN      settings put secure default_input_method "com.baidu.input/.ImeService"
+2026-08-28 10:58:00.395    SHELL_CODE    0
+2026-08-28 10:58:00.396    BackupServiceLocalImpl    InputMethods restored: com.baidu.input/.ImeService.
+2026-08-28 10:58:00.397    BackupServiceLocalImpl    AccessibilityServices is empty, skip restoring.
+2026-08-28 10:58:07.405    BackupServiceCloudImpl    Preprocessing is starting.
+2026-08-28 10:58:07.422    SHELL_IN      settings get secure default_input_method
+2026-08-28 10:58:07.478    SHELL_OUT     com.baidu.input/.ImeService
+2026-08-28 10:58:07.479    SHELL_CODE    0
+2026-08-28 10:58:07.480    SHELL_IN      settings get secure enabled_accessibility_services
+2026-08-28 10:58:07.524    SHELL_CODE    0
+2026-08-28 10:58:07.525    BackupServiceCloudImpl    InputMethods: com.baidu.input/.ImeService.
+2026-08-28 10:58:07.525    BackupServiceCloudImpl    AccessibilityServices: .
+2026-08-28 10:58:07.526    BackupServiceCloudImpl    Trying to create: /data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps.
+2026-08-28 10:58:07.526    BackupServiceCloudImpl    Trying to create: /data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/configs.
+2026-08-28 10:58:07.561    BackupServiceCloudImpl    Trying to create: cmcc/测试/apps.
+2026-08-28 10:58:07.562    BackupServiceCloudImpl    Trying to create: cmcc/测试/configs.
+2026-08-28 10:58:08.235    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:58:08.243    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:58:08.784    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:58:10.378    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:58:10.997    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps
+2026-08-28 10:58:12.023    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps (409 Conflict)), continue
+2026-08-28 10:58:12.596    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:58:12.609    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:58:13.168    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:58:14.887    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:58:15.449    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/configs
+2026-08-28 10:58:16.531    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/configs already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/configs (409 Conflict)), continue
+2026-08-28 10:58:16.538    BackupServiceCloudImpl    Processing is starting.
+2026-08-28 10:58:16.580    BackupServiceCloudImpl    Task count: 1.
+2026-08-28 10:58:16.590    BackupServiceCloudImpl    Kill app option: OPTION_II
+2026-08-28 10:58:16.601    BackupServiceCloudImpl    Current package: PackageEntity(id=88, indexInfo=PackageIndexInfo(opType=BACKUP, packageName=com.aikuai.ecloud, userId=0, compressionType=ZSTD, preserveId=0, cloud=, backupDir=), packageInfo=PackageInfo(label=爱快iKuai, versionName=5.1.15, versionCode=310, flags=686341700, firstInstallTime=1774857015043, lastUpdateTime=1782264943365), extraInfo=PackageExtraInfo(uid=10027, hasKeystore=true, permissions=[PackagePermission(name=android.permission.REQUEST_INSTALL_PACKAGES, isGranted=false, op=66, mode=null), PackagePermission(name=android.permission.READ_MEDIA_IMAGES, isGranted=false, op=85, mode=null), PackagePermission(name=android.permission.READ_MEDIA_VIDEO, isGranted=false, op=83, mode=null), PackagePermission(name=android.permission.ACCESS_FINE_LOCATION, isGranted=false, op=1, mode=null), PackagePermission(name=android.permission.READ_EXTERNAL_STORAGE, isGranted=false, op=59, mode=null), PackagePermission(name=android.permission.WRITE_EXTERNAL_STORAGE, isGranted=false, op=60, mode=null), PackagePermission(name=android.permission.CAMERA, isGranted=false, op=26, mode=null), PackagePermission(name=android.permission.READ_PHONE_STATE, isGranted=false, op=51, mode=null), PackagePermission(name=android.permission.WRITE_SETTINGS, isGranted=false, op=23, mode=null), PackagePermission(name=android.permission.NEARBY_WIFI_DEVICES, isGranted=false, op=116, mode=null), PackagePermission(name=android.permission.ACCESS_BACKGROUND_LOCATION, isGranted=false, op=-1, mode=null), PackagePermission(name=android.permission.ACCESS_COARSE_LOCATION, isGranted=false, op=0, mode=null), PackagePermission(name=android.permission.SCHEDULE_EXACT_ALARM, isGranted=false, op=107, mode=null), PackagePermission(name=android.permission.POST_NOTIFICATIONS, isGranted=false, op=11, mode=null), PackagePermission(name=android.permission.READ_MEDIA_VISUAL_USER_SELECTED, isGranted=false, op=123, mode=null)], ssaid=0b3df04a1ee7082b, lastBackupTime=1787885878099, blocked=false, activated=true, firstUpdated=true, enabled=false), dataStates=PackageDataStates(apkState=Selected, userState=Selected, userDeState=Selected, dataState=Selected, obbState=Selected, mediaState=Selected, permissionState=Selected, ssaidState=Selected), storageStats=PackageStorageStats(appBytes=166745088, cacheBytes=3543040, dataBytes=9502720, externalCacheBytes=0), dataStats=PackageDataStats(apkBytes=166560250, userBytes=8771458, userDeBytes=509381, dataBytes=10320, obbBytes=3440, mediaBytes=0), displayStats=PackageDataStats(apkBytes=75909088, userBytes=1036237, userDeBytes=341, dataBytes=132, obbBytes=107, mediaBytes=0))
+2026-08-28 10:58:16.602    BackupServiceCloudImpl    Trying to kill com.aikuai.ecloud.
+2026-08-28 10:58:17.296    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:58:17.310    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:58:17.936    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:58:19.969    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:58:20.509    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps
+2026-08-28 10:58:21.658    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps (409 Conflict)), continue
+2026-08-28 10:58:22.266    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud
+2026-08-28 10:58:23.483    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud (409 Conflict)), continue
+2026-08-28 10:58:24.031    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0
+2026-08-28 10:58:25.200    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud/user_0 (409 Conflict)), continue
+2026-08-28 10:58:25.205    PackagesBackupUtil    Backing up apk...
+2026-08-28 10:58:25.236    SHELL_IN      cd /data/app/~~esb_XPzDUYIBgKOLw-5nRw==/com.aikuai.ecloud--kNRpbWavlFkOEf0qxgHLA==
+2026-08-28 10:58:25.239    SHELL_CODE    0
+2026-08-28 10:58:25.240    SHELL_IN      tar --totals -cpf - ./*.apk | zstd -r -T0 --ultra -q --priority=rt -1 > "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.aikuai.ecloud/user_0/apk.tar.zst"
+2026-08-28 10:58:25.450    SHELL_OUT     Total bytes written: 132147200 (127MiB, 646MiB/s)
+2026-08-28 10:58:25.450    SHELL_CODE    0
+2026-08-28 10:58:25.450    SHELL_IN      cd /
+2026-08-28 10:58:25.452    SHELL_CODE    0
+2026-08-28 10:58:25.455    SHELL_IN      zstd -d -c "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.aikuai.ecloud/user_0/apk.tar.zst" | tar -tf - > /dev/null 2>&1
+2026-08-28 10:58:25.623    SHELL_CODE    0
+2026-08-28 10:58:25.624    CommonBackupUtil    Everything seems fine.
+2026-08-28 10:58:25.643    CloudRepository    Uploading...
+2026-08-28 10:58:25.644    SHELL_IN      ls -Zd "/data/user/0/com.xayah.databackup.foss/files" | awk 'NF>1{print $1}'
+2026-08-28 10:58:25.669    SHELL_OUT     u:object_r:app_data_file:s0:c226,c257,c512,c768
+2026-08-28 10:58:25.670    SHELL_CODE    0
+2026-08-28 10:58:25.671    SHELL_IN      chcon -hR "u:object_r:app_data_file:s0:c226,c257,c512,c768" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:58:25.686    SHELL_CODE    0
+2026-08-28 10:58:25.687    SHELL_IN      chown -hR "10482:10482" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:58:25.702    SHELL_CODE    0
+2026-08-28 10:58:25.703    WebDAVClientImpl    upload: /data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.aikuai.ecloud/user_0/apk.tar.zst to http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0/apk.tar.zst
+2026-08-28 10:58:26.316    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:58:26.326    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:58:26.772    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:58:28.490    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:58:29.084    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps
+2026-08-28 10:58:30.250    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps (409 Conflict)), continue
+2026-08-28 10:58:30.925    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud
+2026-08-28 10:58:32.044    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud (409 Conflict)), continue
+2026-08-28 10:58:32.589    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0
+2026-08-28 10:58:33.598    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud/user_0 (409 Conflict)), continue
+2026-08-28 10:58:37.376    CloudRepository    com.xayah.libsardine.impl.SardineException: Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud/user_0/apk.tar.zst (405 Method Not Allowed)
+	at com.xayah.libsardine.impl.handler.ValidatingResponseHandler.validateResponse(ValidatingResponseHandler.java:32)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:2)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:3)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:25)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:8)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:17)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:16)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload$lambda$17(WebDAVClientImpl.kt:99)
+	at com.xayah.core.network.client.WebDAVClientImpl.p(WebDAVClientImpl.kt:1)
+	at com.xayah.core.network.client.S.invoke(R8$$SyntheticClass:18)
+	at com.xayah.core.network.client.WebDAVClientImpl.withClient(WebDAVClientImpl.kt:8)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload(WebDAVClientImpl.kt:22)
+	at com.xayah.core.data.repository.CloudRepository.upload(CloudRepository.kt:161)
+	at com.xayah.core.service.util.PackagesBackupUtil.upload(PackagesBackupUtil.kt:266)
+	at com.xayah.core.service.util.PackagesBackupUtil$upload$1.invokeSuspend(PackagesBackupUtil.kt:19)
+	at X4.a.resumeWith(ContinuationImpl.kt:9)
+	at p5.O.run(DispatchedTask.kt:115)
+	at u5.j$a.run(LimitedDispatcher.kt:8)
+	at w5.i.run(Tasks.kt:3)
+	at w5.a$a.run(CoroutineScheduler.kt:98)
+
+2026-08-28 10:58:37.494    PackagesBackupUtil    Backing up user...
+2026-08-28 10:58:37.505    PackagesBackupUtil    ExclusionList: ["com.aikuai.ecloud/.ota", "com.aikuai.ecloud/cache", "com.aikuai.ecloud/lib", "com.aikuai.ecloud/code_cache", "com.aikuai.ecloud/no_backup"].
+2026-08-28 10:58:37.519    SHELL_IN      tar --totals --exclude="com.aikuai.ecloud/.ota" --exclude="com.aikuai.ecloud/cache" --exclude="com.aikuai.ecloud/lib" --exclude="com.aikuai.ecloud/code_cache" --exclude="com.aikuai.ecloud/no_backup" -cpf - -C "/data/user/0" -- "com.aikuai.ecloud" | zstd -r -T0 --ultra -q --priority=rt -1 > "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.aikuai.ecloud/user_0/user.tar.zst"
+2026-08-28 10:58:37.558    SHELL_OUT     Total bytes written: 5816320 (5.6MiB, 197MiB/s)
+2026-08-28 10:58:37.559    SHELL_CODE    0
+2026-08-28 10:58:37.564    SHELL_IN      zstd -d -c "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.aikuai.ecloud/user_0/user.tar.zst" | tar -tf - > /dev/null 2>&1
+2026-08-28 10:58:37.580    SHELL_CODE    0
+2026-08-28 10:58:37.581    CommonBackupUtil    Everything seems fine.
+2026-08-28 10:58:37.595    CloudRepository    Uploading...
+2026-08-28 10:58:37.596    SHELL_IN      ls -Zd "/data/user/0/com.xayah.databackup.foss/files" | awk 'NF>1{print $1}'
+2026-08-28 10:58:37.626    SHELL_OUT     u:object_r:app_data_file:s0:c226,c257,c512,c768
+2026-08-28 10:58:37.627    SHELL_CODE    0
+2026-08-28 10:58:37.628    SHELL_IN      chcon -hR "u:object_r:app_data_file:s0:c226,c257,c512,c768" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:58:37.656    SHELL_CODE    0
+2026-08-28 10:58:37.657    SHELL_IN      chown -hR "10482:10482" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:58:37.681    SHELL_CODE    0
+2026-08-28 10:58:37.683    WebDAVClientImpl    upload: /data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.aikuai.ecloud/user_0/user.tar.zst to http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0/user.tar.zst
+2026-08-28 10:58:38.170    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:58:38.180    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:58:38.778    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:58:40.758    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:58:41.444    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps
+2026-08-28 10:58:42.523    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps (409 Conflict)), continue
+2026-08-28 10:58:43.110    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud
+2026-08-28 10:58:44.250    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud (409 Conflict)), continue
+2026-08-28 10:58:44.883    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0
+2026-08-28 10:58:46.092    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud/user_0 (409 Conflict)), continue
+2026-08-28 10:58:49.480    CloudRepository    com.xayah.libsardine.impl.SardineException: Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud/user_0/user.tar.zst (405 Method Not Allowed)
+	at com.xayah.libsardine.impl.handler.ValidatingResponseHandler.validateResponse(ValidatingResponseHandler.java:32)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:2)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:3)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:25)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:8)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:17)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:16)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload$lambda$17(WebDAVClientImpl.kt:99)
+	at com.xayah.core.network.client.WebDAVClientImpl.p(WebDAVClientImpl.kt:1)
+	at com.xayah.core.network.client.S.invoke(R8$$SyntheticClass:18)
+	at com.xayah.core.network.client.WebDAVClientImpl.withClient(WebDAVClientImpl.kt:8)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload(WebDAVClientImpl.kt:22)
+	at com.xayah.core.data.repository.CloudRepository.upload(CloudRepository.kt:161)
+	at com.xayah.core.service.util.PackagesBackupUtil.upload(PackagesBackupUtil.kt:266)
+	at com.xayah.core.service.util.PackagesBackupUtil$upload$1.invokeSuspend(PackagesBackupUtil.kt:19)
+	at X4.a.resumeWith(ContinuationImpl.kt:9)
+	at p5.O.run(DispatchedTask.kt:115)
+	at u5.j$a.run(LimitedDispatcher.kt:8)
+	at w5.i.run(Tasks.kt:3)
+	at w5.a$a.run(CoroutineScheduler.kt:98)
+
+2026-08-28 10:58:49.514    PackagesBackupUtil    Backing up user_de...
+2026-08-28 10:58:49.519    PackagesBackupUtil    ExclusionList: ["com.aikuai.ecloud/.ota", "com.aikuai.ecloud/cache", "com.aikuai.ecloud/lib", "com.aikuai.ecloud/code_cache", "com.aikuai.ecloud/no_backup"].
+2026-08-28 10:58:49.545    SHELL_IN      tar --totals --exclude="com.aikuai.ecloud/.ota" --exclude="com.aikuai.ecloud/cache" --exclude="com.aikuai.ecloud/lib" --exclude="com.aikuai.ecloud/code_cache" --exclude="com.aikuai.ecloud/no_backup" -cpf - -C "/data/user_de/0" -- "com.aikuai.ecloud" | zstd -r -T0 --ultra -q --priority=rt -1 > "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.aikuai.ecloud/user_0/user_de.tar.zst"
+2026-08-28 10:58:49.560    SHELL_OUT     Total bytes written: 10240 (10KiB, 22MiB/s)
+2026-08-28 10:58:49.562    SHELL_CODE    0
+2026-08-28 10:58:49.565    SHELL_IN      zstd -d -c "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.aikuai.ecloud/user_0/user_de.tar.zst" | tar -tf - > /dev/null 2>&1
+2026-08-28 10:58:49.573    SHELL_CODE    0
+2026-08-28 10:58:49.574    CommonBackupUtil    Everything seems fine.
+2026-08-28 10:58:49.586    CloudRepository    Uploading...
+2026-08-28 10:58:49.587    SHELL_IN      ls -Zd "/data/user/0/com.xayah.databackup.foss/files" | awk 'NF>1{print $1}'
+2026-08-28 10:58:49.614    SHELL_OUT     u:object_r:app_data_file:s0:c226,c257,c512,c768
+2026-08-28 10:58:49.615    SHELL_CODE    0
+2026-08-28 10:58:49.615    SHELL_IN      chcon -hR "u:object_r:app_data_file:s0:c226,c257,c512,c768" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:58:49.650    SHELL_CODE    0
+2026-08-28 10:58:49.651    SHELL_IN      chown -hR "10482:10482" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:58:49.676    SHELL_CODE    0
+2026-08-28 10:58:49.676    WebDAVClientImpl    upload: /data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.aikuai.ecloud/user_0/user_de.tar.zst to http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0/user_de.tar.zst
+2026-08-28 10:58:50.284    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:58:50.297    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:58:50.770    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:58:52.632    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:58:53.229    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps
+2026-08-28 10:58:54.425    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps (409 Conflict)), continue
+2026-08-28 10:58:55.010    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud
+2026-08-28 10:58:56.355    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud (409 Conflict)), continue
+2026-08-28 10:58:56.896    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0
+2026-08-28 10:58:58.088    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud/user_0 (409 Conflict)), continue
+2026-08-28 10:59:01.276    CloudRepository    com.xayah.libsardine.impl.SardineException: Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud/user_0/user_de.tar.zst (405 Method Not Allowed)
+	at com.xayah.libsardine.impl.handler.ValidatingResponseHandler.validateResponse(ValidatingResponseHandler.java:32)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:2)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:3)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:25)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:8)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:17)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:16)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload$lambda$17(WebDAVClientImpl.kt:99)
+	at com.xayah.core.network.client.WebDAVClientImpl.p(WebDAVClientImpl.kt:1)
+	at com.xayah.core.network.client.S.invoke(R8$$SyntheticClass:18)
+	at com.xayah.core.network.client.WebDAVClientImpl.withClient(WebDAVClientImpl.kt:8)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload(WebDAVClientImpl.kt:22)
+	at com.xayah.core.data.repository.CloudRepository.upload(CloudRepository.kt:161)
+	at com.xayah.core.service.util.PackagesBackupUtil.upload(PackagesBackupUtil.kt:266)
+	at com.xayah.core.service.util.PackagesBackupUtil$upload$1.invokeSuspend(PackagesBackupUtil.kt:19)
+	at X4.a.resumeWith(ContinuationImpl.kt:9)
+	at p5.O.run(DispatchedTask.kt:115)
+	at u5.j$a.run(LimitedDispatcher.kt:8)
+	at w5.i.run(Tasks.kt:3)
+	at w5.a$a.run(CoroutineScheduler.kt:98)
+
+2026-08-28 10:59:01.304    PackagesBackupUtil    Backing up data...
+2026-08-28 10:59:01.320    PackagesBackupUtil    ExclusionList: ["com.aikuai.ecloud/cache", "Backup_"*].
+2026-08-28 10:59:01.330    SHELL_IN      tar --totals --exclude="com.aikuai.ecloud/cache" --exclude="Backup_"* -cpf - -C "/data/media/0/Android/data" -- "com.aikuai.ecloud" | zstd -r -T0 --ultra -q --priority=rt -1 > "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.aikuai.ecloud/user_0/data.tar.zst"
+2026-08-28 10:59:01.341    SHELL_OUT     Total bytes written: 10240 (10KiB, 66MiB/s)
+2026-08-28 10:59:01.342    SHELL_CODE    0
+2026-08-28 10:59:01.344    SHELL_IN      zstd -d -c "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.aikuai.ecloud/user_0/data.tar.zst" | tar -tf - > /dev/null 2>&1
+2026-08-28 10:59:01.354    SHELL_CODE    0
+2026-08-28 10:59:01.354    CommonBackupUtil    Everything seems fine.
+2026-08-28 10:59:01.364    CloudRepository    Uploading...
+2026-08-28 10:59:01.365    SHELL_IN      ls -Zd "/data/user/0/com.xayah.databackup.foss/files" | awk 'NF>1{print $1}'
+2026-08-28 10:59:01.393    SHELL_OUT     u:object_r:app_data_file:s0:c226,c257,c512,c768
+2026-08-28 10:59:01.394    SHELL_CODE    0
+2026-08-28 10:59:01.395    SHELL_IN      chcon -hR "u:object_r:app_data_file:s0:c226,c257,c512,c768" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:59:01.420    SHELL_CODE    0
+2026-08-28 10:59:01.422    SHELL_IN      chown -hR "10482:10482" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:59:01.457    SHELL_CODE    0
+2026-08-28 10:59:01.459    WebDAVClientImpl    upload: /data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.aikuai.ecloud/user_0/data.tar.zst to http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0/data.tar.zst
+2026-08-28 10:59:02.048    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:59:02.063    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:59:02.626    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:59:04.426    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:59:05.096    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps
+2026-08-28 10:59:06.089    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps (409 Conflict)), continue
+2026-08-28 10:59:06.648    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud
+2026-08-28 10:59:07.909    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud (409 Conflict)), continue
+2026-08-28 10:59:08.435    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0
+2026-08-28 10:59:09.548    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud/user_0 (409 Conflict)), continue
+2026-08-28 10:59:12.859    CloudRepository    com.xayah.libsardine.impl.SardineException: Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud/user_0/data.tar.zst (405 Method Not Allowed)
+	at com.xayah.libsardine.impl.handler.ValidatingResponseHandler.validateResponse(ValidatingResponseHandler.java:32)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:2)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:3)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:25)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:8)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:17)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:16)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload$lambda$17(WebDAVClientImpl.kt:99)
+	at com.xayah.core.network.client.WebDAVClientImpl.p(WebDAVClientImpl.kt:1)
+	at com.xayah.core.network.client.S.invoke(R8$$SyntheticClass:18)
+	at com.xayah.core.network.client.WebDAVClientImpl.withClient(WebDAVClientImpl.kt:8)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload(WebDAVClientImpl.kt:22)
+	at com.xayah.core.data.repository.CloudRepository.upload(CloudRepository.kt:161)
+	at com.xayah.core.service.util.PackagesBackupUtil.upload(PackagesBackupUtil.kt:266)
+	at com.xayah.core.service.util.PackagesBackupUtil$upload$1.invokeSuspend(PackagesBackupUtil.kt:19)
+	at X4.a.resumeWith(ContinuationImpl.kt:9)
+	at p5.O.run(DispatchedTask.kt:115)
+	at u5.j$a.run(LimitedDispatcher.kt:8)
+	at w5.i.run(Tasks.kt:3)
+	at w5.a$a.run(CoroutineScheduler.kt:98)
+
+2026-08-28 10:59:12.889    PackagesBackupUtil    Backing up obb...
+2026-08-28 10:59:12.907    PackagesBackupUtil    ExclusionList: ["com.aikuai.ecloud/cache", "Backup_"*].
+2026-08-28 10:59:12.935    SHELL_IN      tar --totals --exclude="com.aikuai.ecloud/cache" --exclude="Backup_"* -cpf - -C "/data/media/0/Android/obb" -- "com.aikuai.ecloud" | zstd -r -T0 --ultra -q --priority=rt -1 > "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.aikuai.ecloud/user_0/obb.tar.zst"
+2026-08-28 10:59:12.952    SHELL_OUT     Total bytes written: 10240 (10KiB, 21MiB/s)
+2026-08-28 10:59:12.953    SHELL_CODE    0
+2026-08-28 10:59:12.956    SHELL_IN      zstd -d -c "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.aikuai.ecloud/user_0/obb.tar.zst" | tar -tf - > /dev/null 2>&1
+2026-08-28 10:59:12.964    SHELL_CODE    0
+2026-08-28 10:59:12.965    CommonBackupUtil    Everything seems fine.
+2026-08-28 10:59:12.980    CloudRepository    Uploading...
+2026-08-28 10:59:12.981    SHELL_IN      ls -Zd "/data/user/0/com.xayah.databackup.foss/files" | awk 'NF>1{print $1}'
+2026-08-28 10:59:13.011    SHELL_OUT     u:object_r:app_data_file:s0:c226,c257,c512,c768
+2026-08-28 10:59:13.012    SHELL_CODE    0
+2026-08-28 10:59:13.013    SHELL_IN      chcon -hR "u:object_r:app_data_file:s0:c226,c257,c512,c768" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:59:13.034    SHELL_CODE    0
+2026-08-28 10:59:13.035    SHELL_IN      chown -hR "10482:10482" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:59:13.053    SHELL_CODE    0
+2026-08-28 10:59:13.055    WebDAVClientImpl    upload: /data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/apps/com.aikuai.ecloud/user_0/obb.tar.zst to http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0/obb.tar.zst
+2026-08-28 10:59:13.686    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:59:13.689    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:59:14.195    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:59:15.938    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:59:16.399    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps
+2026-08-28 10:59:17.454    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps (409 Conflict)), continue
+2026-08-28 10:59:17.956    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud
+2026-08-28 10:59:18.968    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud (409 Conflict)), continue
+2026-08-28 10:59:19.588    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0
+2026-08-28 10:59:20.722    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/apps/com.aikuai.ecloud/user_0 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud/user_0 (409 Conflict)), continue
+2026-08-28 10:59:24.230    CloudRepository    com.xayah.libsardine.impl.SardineException: Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/apps/com.aikuai.ecloud/user_0/obb.tar.zst (405 Method Not Allowed)
+	at com.xayah.libsardine.impl.handler.ValidatingResponseHandler.validateResponse(ValidatingResponseHandler.java:32)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:2)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:3)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:25)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:8)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:17)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:16)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload$lambda$17(WebDAVClientImpl.kt:99)
+	at com.xayah.core.network.client.WebDAVClientImpl.p(WebDAVClientImpl.kt:1)
+	at com.xayah.core.network.client.S.invoke(R8$$SyntheticClass:18)
+	at com.xayah.core.network.client.WebDAVClientImpl.withClient(WebDAVClientImpl.kt:8)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload(WebDAVClientImpl.kt:22)
+	at com.xayah.core.data.repository.CloudRepository.upload(CloudRepository.kt:161)
+	at com.xayah.core.service.util.PackagesBackupUtil.upload(PackagesBackupUtil.kt:266)
+	at com.xayah.core.service.util.PackagesBackupUtil$upload$1.invokeSuspend(PackagesBackupUtil.kt:19)
+	at X4.a.resumeWith(ContinuationImpl.kt:9)
+	at p5.O.run(DispatchedTask.kt:115)
+	at u5.j$a.run(LimitedDispatcher.kt:8)
+	at w5.i.run(Tasks.kt:3)
+	at w5.a$a.run(CoroutineScheduler.kt:98)
+
+2026-08-28 10:59:24.248    PackagesBackupUtil    Backing up media...
+2026-08-28 10:59:24.258    PackagesBackupUtil    Not exist and skip: /data/media/0/Android/media/com.aikuai.ecloud
+2026-08-28 10:59:24.278    PackagesBackupUtil    Backing up permissions...
+2026-08-28 10:59:24.323    PackagesBackupUtil    Permissions size: 15...
+2026-08-28 10:59:24.325    PackagesBackupUtil    Permission name: android.permission.REQUEST_INSTALL_PACKAGES, isGranted: false, op: 66, mode: null
+2026-08-28 10:59:24.325    PackagesBackupUtil    Permission name: android.permission.READ_MEDIA_IMAGES, isGranted: false, op: 85, mode: null
+2026-08-28 10:59:24.326    PackagesBackupUtil    Permission name: android.permission.READ_MEDIA_VIDEO, isGranted: false, op: 83, mode: null
+2026-08-28 10:59:24.326    PackagesBackupUtil    Permission name: android.permission.ACCESS_FINE_LOCATION, isGranted: false, op: 1, mode: null
+2026-08-28 10:59:24.327    PackagesBackupUtil    Permission name: android.permission.READ_EXTERNAL_STORAGE, isGranted: false, op: 59, mode: null
+2026-08-28 10:59:24.327    PackagesBackupUtil    Permission name: android.permission.WRITE_EXTERNAL_STORAGE, isGranted: false, op: 60, mode: null
+2026-08-28 10:59:24.327    PackagesBackupUtil    Permission name: android.permission.CAMERA, isGranted: false, op: 26, mode: null
+2026-08-28 10:59:24.328    PackagesBackupUtil    Permission name: android.permission.READ_PHONE_STATE, isGranted: false, op: 51, mode: null
+2026-08-28 10:59:24.328    PackagesBackupUtil    Permission name: android.permission.WRITE_SETTINGS, isGranted: false, op: 23, mode: null
+2026-08-28 10:59:24.329    PackagesBackupUtil    Permission name: android.permission.NEARBY_WIFI_DEVICES, isGranted: false, op: 116, mode: null
+2026-08-28 10:59:24.329    PackagesBackupUtil    Permission name: android.permission.ACCESS_BACKGROUND_LOCATION, isGranted: false, op: -1, mode: null
+2026-08-28 10:59:24.329    PackagesBackupUtil    Permission name: android.permission.ACCESS_COARSE_LOCATION, isGranted: false, op: 0, mode: null
+2026-08-28 10:59:24.330    PackagesBackupUtil    Permission name: android.permission.SCHEDULE_EXACT_ALARM, isGranted: false, op: 107, mode: null
+2026-08-28 10:59:24.330    PackagesBackupUtil    Permission name: android.permission.POST_NOTIFICATIONS, isGranted: false, op: 11, mode: null
+2026-08-28 10:59:24.330    PackagesBackupUtil    Permission name: android.permission.READ_MEDIA_VISUAL_USER_SELECTED, isGranted: false, op: 123, mode: null
+2026-08-28 10:59:24.331    PackagesBackupUtil    Backing up ssaid...
+2026-08-28 10:59:24.337    PackagesBackupUtil    Ssaid: 0b3df04a1ee7082b
+2026-08-28 10:59:24.733    BackupServiceCloudImpl    PostProcessing is starting.
+2026-08-28 10:59:24.756    BackupServiceCloudImpl    Backup itself enabled.
+2026-08-28 10:59:24.757    CommonBackupUtil    Backing up itself...
+2026-08-28 10:59:24.817    CommonBackupUtil    Copied from /data/app/~~v2sHgsN6VFBzI8OR8DcS2w==/com.xayah.databackup.foss-xVb9G_qTJsKMT2blXesLmw==/base.apk to /data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/DataBackup.apk.
+2026-08-28 10:59:24.827    CloudRepository    Uploading...
+2026-08-28 10:59:24.829    SHELL_IN      ls -Zd "/data/user/0/com.xayah.databackup.foss/files" | awk 'NF>1{print $1}'
+2026-08-28 10:59:24.861    SHELL_OUT     u:object_r:app_data_file:s0:c226,c257,c512,c768
+2026-08-28 10:59:24.861    SHELL_CODE    0
+2026-08-28 10:59:24.862    SHELL_IN      chcon -hR "u:object_r:app_data_file:s0:c226,c257,c512,c768" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:59:24.893    SHELL_CODE    0
+2026-08-28 10:59:24.895    SHELL_IN      chown -hR "10482:10482" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:59:24.912    SHELL_CODE    0
+2026-08-28 10:59:24.913    WebDAVClientImpl    upload: /data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/DataBackup.apk to http://0.0.0.0:5244/dav/cmcc/测试/DataBackup.apk
+2026-08-28 10:59:25.575    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:59:25.587    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:59:26.168    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:59:27.841    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:59:29.705    CloudRepository    com.xayah.libsardine.impl.SardineException: Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/DataBackup.apk (405 Method Not Allowed)
+	at com.xayah.libsardine.impl.handler.ValidatingResponseHandler.validateResponse(ValidatingResponseHandler.java:32)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:2)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:3)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:25)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:8)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:17)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:16)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload$lambda$17(WebDAVClientImpl.kt:99)
+	at com.xayah.core.network.client.WebDAVClientImpl.p(WebDAVClientImpl.kt:1)
+	at com.xayah.core.network.client.S.invoke(R8$$SyntheticClass:18)
+	at com.xayah.core.network.client.WebDAVClientImpl.withClient(WebDAVClientImpl.kt:8)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload(WebDAVClientImpl.kt:22)
+	at com.xayah.core.data.repository.CloudRepository.upload(CloudRepository.kt:161)
+	at com.xayah.core.service.packages.backup.BackupServiceCloudImpl.onItselfSaved(BackupServiceCloudImpl.kt:219)
+	at com.xayah.core.service.packages.backup.BackupServiceCloudImpl$onItselfSaved$1.invokeSuspend(BackupServiceCloudImpl.kt:13)
+	at X4.a.resumeWith(ContinuationImpl.kt:9)
+	at p5.O.run(DispatchedTask.kt:115)
+	at u5.j$a.run(LimitedDispatcher.kt:8)
+	at w5.i.run(Tasks.kt:3)
+	at w5.a$a.run(CoroutineScheduler.kt:98)
+
+2026-08-28 10:59:29.725    PackagesBackupUtil    Backing up icons...
+2026-08-28 10:59:29.727    SHELL_IN      tar --totals -cpf - -C "/data/user/0/com.xayah.databackup.foss/files" -- "icon" > "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/configs/icon.tar"
+2026-08-28 10:59:29.752    SHELL_OUT     Total bytes written: 6051840 (5.8MiB, 349MiB/s)
+2026-08-28 10:59:29.752    SHELL_CODE    0
+2026-08-28 10:59:29.756    SHELL_IN      tar -tf "/data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/configs/icon.tar" > /dev/null 2>&1
+2026-08-28 10:59:29.769    SHELL_CODE    0
+2026-08-28 10:59:29.770    CommonBackupUtil    Everything seems fine.
+2026-08-28 10:59:29.775    CloudRepository    Uploading...
+2026-08-28 10:59:29.775    SHELL_IN      ls -Zd "/data/user/0/com.xayah.databackup.foss/files" | awk 'NF>1{print $1}'
+2026-08-28 10:59:29.799    SHELL_OUT     u:object_r:app_data_file:s0:c226,c257,c512,c768
+2026-08-28 10:59:29.799    SHELL_CODE    0
+2026-08-28 10:59:29.800    SHELL_IN      chcon -hR "u:object_r:app_data_file:s0:c226,c257,c512,c768" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:59:29.822    SHELL_CODE    0
+2026-08-28 10:59:29.824    SHELL_IN      chown -hR "10482:10482" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:59:29.848    SHELL_CODE    0
+2026-08-28 10:59:29.849    WebDAVClientImpl    upload: /data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/configs/icon.tar to http://0.0.0.0:5244/dav/cmcc/测试/configs/icon.tar
+2026-08-28 10:59:30.509    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:59:30.521    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:59:31.056    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:59:32.584    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:59:33.229    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/configs
+2026-08-28 10:59:34.318    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/configs already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/configs (409 Conflict)), continue
+2026-08-28 10:59:36.476    CloudRepository    com.xayah.libsardine.impl.SardineException: Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/configs/icon.tar (405 Method Not Allowed)
+	at com.xayah.libsardine.impl.handler.ValidatingResponseHandler.validateResponse(ValidatingResponseHandler.java:32)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:2)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:3)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:25)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:8)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:17)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:16)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload$lambda$17(WebDAVClientImpl.kt:99)
+	at com.xayah.core.network.client.WebDAVClientImpl.p(WebDAVClientImpl.kt:1)
+	at com.xayah.core.network.client.S.invoke(R8$$SyntheticClass:18)
+	at com.xayah.core.network.client.WebDAVClientImpl.withClient(WebDAVClientImpl.kt:8)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload(WebDAVClientImpl.kt:22)
+	at com.xayah.core.data.repository.CloudRepository.upload(CloudRepository.kt:161)
+	at com.xayah.core.service.packages.backup.BackupServiceCloudImpl.onIconsSaved(BackupServiceCloudImpl.kt:219)
+	at com.xayah.core.service.packages.backup.BackupServiceCloudImpl$onIconsSaved$1.invokeSuspend(BackupServiceCloudImpl.kt:13)
+	at X4.a.resumeWith(ContinuationImpl.kt:9)
+	at p5.O.run(DispatchedTask.kt:115)
+	at u5.j$a.run(LimitedDispatcher.kt:8)
+	at w5.i.run(Tasks.kt:3)
+	at w5.a$a.run(CoroutineScheduler.kt:98)
+
+2026-08-28 10:59:36.522    BackupServiceCloudImpl    Backup configs enabled.
+2026-08-28 10:59:36.523    CommonBackupUtil    Backing up configs...
+2026-08-28 10:59:36.542    CloudRepository    Uploading...
+2026-08-28 10:59:36.542    SHELL_IN      ls -Zd "/data/user/0/com.xayah.databackup.foss/files" | awk 'NF>1{print $1}'
+2026-08-28 10:59:36.572    SHELL_OUT     u:object_r:app_data_file:s0:c226,c257,c512,c768
+2026-08-28 10:59:36.573    SHELL_CODE    0
+2026-08-28 10:59:36.574    SHELL_IN      chcon -hR "u:object_r:app_data_file:s0:c226,c257,c512,c768" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:59:36.590    SHELL_CODE    0
+2026-08-28 10:59:36.591    SHELL_IN      chown -hR "10482:10482" "/data/user/0/com.xayah.databackup.foss/files/"
+2026-08-28 10:59:36.614    SHELL_CODE    0
+2026-08-28 10:59:36.615    WebDAVClientImpl    upload: /data/user/0/com.xayah.databackup.foss/files/DataBackupTmpDir/configs/configurations.json to http://0.0.0.0:5244/dav/cmcc/测试/configs/configurations.json
+2026-08-28 10:59:37.186    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc
+2026-08-28 10:59:37.196    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc already exists (Error contacting http://0.0.0.0:5244/dav/cmcc (405 Method Not Allowed)), continue
+2026-08-28 10:59:37.668    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试
+2026-08-28 10:59:39.217    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试 already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95 (405 Method Not Allowed)), continue
+2026-08-28 10:59:39.864    WebDAVClientImpl    mkdir: http://0.0.0.0:5244/dav/cmcc/测试/configs
+2026-08-28 10:59:40.981    WebDAVClientImpl    mkdirRecursively: http://0.0.0.0:5244/dav/cmcc/测试/configs already exists (Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/configs (409 Conflict)), continue
+2026-08-28 10:59:43.307    CloudRepository    com.xayah.libsardine.impl.SardineException: Error contacting http://0.0.0.0:5244/dav/cmcc/%E6%B5%8B%E8%AF%95/configs/configurations.json (405 Method Not Allowed)
+	at com.xayah.libsardine.impl.handler.ValidatingResponseHandler.validateResponse(ValidatingResponseHandler.java:32)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:2)
+	at com.xayah.libsardine.impl.handler.VoidResponseHandler.handleResponse(VoidResponseHandler.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:3)
+	at com.xayah.libsardine.impl.OkHttpSardine.execute(OkHttpSardine.java:1)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:25)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:8)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:17)
+	at com.xayah.libsardine.impl.OkHttpSardine.put(OkHttpSardine.java:16)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload$lambda$17(WebDAVClientImpl.kt:99)
+	at com.xayah.core.network.client.WebDAVClientImpl.p(WebDAVClientImpl.kt:1)
+	at com.xayah.core.network.client.S.invoke(R8$$SyntheticClass:18)
+	at com.xayah.core.network.client.WebDAVClientImpl.withClient(WebDAVClientImpl.kt:8)
+	at com.xayah.core.network.client.WebDAVClientImpl.upload(WebDAVClientImpl.kt:22)
+	at com.xayah.core.data.repository.CloudRepository.upload(CloudRepository.kt:161)
+	at com.xayah.core.service.packages.backup.BackupServiceCloudImpl.onConfigsSaved(BackupServiceCloudImpl.kt:218)
+	at com.xayah.core.service.packages.backup.BackupServiceCloudImpl$onConfigsSaved$1.invokeSuspend(BackupServiceCloudImpl.kt:13)
+	at X4.a.resumeWith(ContinuationImpl.kt:9)
+	at p5.O.run(DispatchedTask.kt:115)
+	at u5.j$a.run(LimitedDispatcher.kt:8)
+	at w5.i.run(Tasks.kt:3)
+	at w5.a$a.run(CoroutineScheduler.kt:98)
+
+2026-08-28 10:59:43.324    SHELL_IN      ime enable "com.baidu.input/.ImeService"
+2026-08-28 10:59:43.387    SHELL_OUT     Input method com.baidu.input/.ImeService: already enabled for user #0
+2026-08-28 10:59:43.388    SHELL_CODE    0
+2026-08-28 10:59:43.389    SHELL_IN      ime set "com.baidu.input/.ImeService"
+2026-08-28 10:59:43.428    SHELL_OUT     Input method com.baidu.input/.ImeService selected for user #0
+2026-08-28 10:59:43.429    SHELL_CODE    0
+2026-08-28 10:59:43.430    SHELL_IN      settings put secure default_input_method "com.baidu.input/.ImeService"
+2026-08-28 10:59:43.489    SHELL_CODE    0
+2026-08-28 10:59:43.490    BackupServiceCloudImpl    InputMethods restored: com.baidu.input/.ImeService.
+2026-08-28 10:59:43.490    BackupServiceCloudImpl    AccessibilityServices is empty, skip restoring.
