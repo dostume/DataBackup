@@ -14,6 +14,15 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Debug directory structure
+      run: |
+        pwd
+        ls -la
+        ls -la repo/ || true
+        ls -la repo/source/ || true
 
     - name: Set up JDK 17
       uses: actions/setup-java@v4
@@ -25,10 +34,10 @@ jobs:
       uses: android-actions/setup-android@v3
 
     - name: Grant execute permission for gradlew
-      run: chmod +x repo/source/gradlew
+      run: chmod +x gradlew
       working-directory: repo/source
 
-    - name: Build APK
+    - name: Build FOSS APK
       run: ./gradlew assembleFossRelease
       working-directory: repo/source
 
@@ -36,4 +45,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: app-foss-release
-        path: repo/source/app/build/outputs/apk/foss/release/*.apk
+        path: repo/source/app/build/outputs/apk/*/release/*.apk
