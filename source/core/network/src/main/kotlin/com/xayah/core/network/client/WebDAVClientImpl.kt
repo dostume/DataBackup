@@ -49,11 +49,30 @@ class WebDAVClientImpl(private val entity: CloudEntity, private val extra: WebDA
         return msg.contains("405") || msg.contains("409")
     }
 
-    private fun getPath(path: String) = "${entity.host.trimEnd('/')}/${path.trimStart('/')}"
+    /**
+     * The host actually used for WebDAV requests. Starts as the configured
+     * host and is corrected to the "/dav" endpoint during [connect] when the
+     * configured host only serves the web frontend (OpenList/AList: their
+     * web root answers 405 to PROPFIND, the real WebDAV lives under /dav).
+     */
+    private var davHost: String = entity.host.trimEnd('/')
+
+    private fun getPath(path: String) = "$davHost/${path.trimStart('/')}"
 
     private fun withClient(block: (client: OkHttpSardine) -> Unit) = run {
         if (client == null) throw NullPointerException("Client is null.")
         block(client!!)
+    }
+
+    /**
+     * True if this 405 came from a web frontend that only speaks GET/POST
+     * (e.g. OpenList/AList). PROPFIND on their web root is answered 405 by
+     * the SPA catch-all route, while the real WebDAV service lives under
+     * the "/dav" prefix.
+     */
+    private fun Throwable.isWebFrontend405(): Boolean {
+        val e = this as? SardineException ?: return false
+        return e.statusCode == 405
     }
 
     override fun connect() {
@@ -91,7 +110,33 @@ class WebDAVClientImpl(private val entity: CloudEntity, private val extra: WebDA
             } else {
                 setCredentials(entity.user, entity.pass, true)
             }
-            list(entity.host)
+
+            // OpenList/AList and other gateways serve WebDAV under the /dav
+            // prefix. If the configured host points at the web frontend,
+            // PROPFIND is answered 405 by the SPA catch-all route. Retry
+            // once with the /dav suffix so either form works.
+            try {
+                list(davHost)
+            } catch (e: Exception) {
+                if (e.isWebFrontend405() && !davHost.endsWith("/dav")) {
+                    log { "connect: ${davHost} answered 405 to PROPFIND, retrying with /dav prefix..." }
+                    val fallback = "${davHost}/dav"
+                    try {
+                        davHost = fallback
+                        list(fallback)
+                    } catch (e2: Exception) {
+                        throw IOException(
+                            "WebDAV endpoint not reachable: ${entity.host} answered 405 to PROPFIND " +
+                                "(it looks like a web frontend such as OpenList/AList), and the /dav " +
+                                "fallback also failed with: ${e2.localizedMessage}. " +
+                                "Try setting the host to ${entity.host.trimEnd('/')}/dav explicitly.",
+                            e2,
+                        )
+                    }
+                } else {
+                    throw e
+                }
+            }
         }
     }
 
@@ -146,7 +191,7 @@ class WebDAVClientImpl(private val entity: CloudEntity, private val extra: WebDA
         if (name.isEmpty()) throw IllegalArgumentException("Upload source path is empty or ends with a slash: $src")
         val dstPath = "${getPath(dst)}/$name"
         log { "upload: $src to $dstPath" }
-        val parent = PathUtil.getParentPath(dstPath.removePrefix(entity.host.trimEnd('/')))
+        val parent = PathUtil.getParentPath(dstPath.removePrefix(davHost))
         if (parent.isNotEmpty()) {
             runCatching { mkdirRecursively(parent) }.onFailure {
                 log { "upload: failed to ensure parent dir $parent: ${it.localizedMessage}" }
