@@ -1,0 +1,121 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 102170302483,
+      "run_id": 34258514964,
+      "workflow_name": "Build APK",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/dostume/DataBackup/actions/runs/34258514964",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUFpCzc8AAAAXydMYEw",
+      "head_sha": "80f508eed7a3507e548f4c91c42fbc8937d355e1",
+      "url": "https://api.github.com/repos/dostume/DataBackup/actions/jobs/102170302483",
+      "html_url": "https://github.com/dostume/DataBackup/actions/runs/34258514964/job/102170302483",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-09-08T17:40:25Z",
+      "started_at": "2026-09-08T17:40:27Z",
+      "completed_at": "2026-09-08T17:46:10Z",
+      "name": "build",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-09-08T17:40:28Z",
+          "completed_at": "2026-09-08T17:40:30Z"
+        },
+        {
+          "name": "Checkout",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-09-08T17:40:30Z",
+          "completed_at": "2026-09-08T17:40:31Z"
+        },
+        {
+          "name": "Set up JDK 17",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-09-08T17:40:31Z",
+          "completed_at": "2026-09-08T17:40:32Z"
+        },
+        {
+          "name": "Set up Gradle",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-09-08T17:40:32Z",
+          "completed_at": "2026-09-08T17:40:39Z"
+        },
+        {
+          "name": "Prepare signing keystore",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-09-08T17:40:39Z",
+          "completed_at": "2026-09-08T17:40:40Z"
+        },
+        {
+          "name": "Build arm64 FOSS release APK",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 6,
+          "started_at": "2026-09-08T17:40:40Z",
+          "completed_at": "2026-09-08T17:45:55Z"
+        },
+        {
+          "name": "Upload APK artifact",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 7,
+          "started_at": "2026-09-08T17:45:55Z",
+          "completed_at": "2026-09-08T17:45:55Z"
+        },
+        {
+          "name": "Post Set up Gradle",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-09-08T17:45:55Z",
+          "completed_at": "2026-09-08T17:46:07Z"
+        },
+        {
+          "name": "Post Set up JDK 17",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-09-08T17:46:07Z",
+          "completed_at": "2026-09-08T17:46:07Z"
+        },
+        {
+          "name": "Post Checkout",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-09-08T17:46:07Z",
+          "completed_at": "2026-09-08T17:46:08Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-09-08T17:46:08Z",
+          "completed_at": "2026-09-08T17:46:08Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/dostume/DataBackup/check-runs/102170302483",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000127,
+      "runner_name": "GitHub Actions 1000000127",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}
