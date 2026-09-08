@@ -1,7 +1,6 @@
 package com.xayah.core.service.util
 
 import android.content.Context
-import com.xayah.core.data.repository.CloudRepository
 import com.xayah.core.model.util.parseVolumePartFileName
 import com.xayah.core.model.util.volumePartFileName
 import com.xayah.core.network.client.CloudClient
@@ -18,20 +17,19 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import java.io.File
-import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
 import javax.inject.Inject
 
 /**
  * Splits a compressed backup stream into fixed-size volume parts and, when
- * streaming is enabled, uploads each part as soon as it is finalized. The
- * compression runs in the root shell and `busybox split` writes the volume
- * files directly, so the archive bytes never cross into the app process.
+ * streaming is enabled, uploads each part as soon as it is finalized and
+ * deletes the local copy right afterwards ("边上传边删除"). The compression runs
+ * in the root shell and `busybox split` writes the volume files directly, so
+ * the archive bytes never cross into the app process.
  */
 class VolumeBackupUtil @Inject constructor(
     @ApplicationContext private val context: Context,
     private val rootService: RemoteRootService,
-    private val cloudRepository: CloudRepository,
 ) {
     companion object {
         private const val TAG = "VolumeBackupUtil"
@@ -49,7 +47,10 @@ class VolumeBackupUtil @Inject constructor(
 
     private fun splitCommand(command: String, dstDir: String, baseName: String, suffix: String, volumeSize: Long): String {
         val prefix = "$dstDir/$baseName.$suffix.part"
-        return "$command | busybox split -b $volumeSize -d -a $VOLUME_SUFFIX_LEN - ${SymbolUtil.QUOTE}$prefix${SymbolUtil.QUOTE}"
+        // umask 022: the volume files are created by the root shell, make sure
+        // they are world-readable so the app process can upload them without a
+        // recursive chown (which would need the busy root shell and serialize streaming).
+        return "umask 022; $command | busybox split -b $volumeSize -d -a $VOLUME_SUFFIX_LEN - ${SymbolUtil.QUOTE}$prefix${SymbolUtil.QUOTE}"
     }
 
     private suspend fun listVolumeParts(dstDir: String, baseName: String, suffix: String): List<VolumePart> =
@@ -66,14 +67,56 @@ class VolumeBackupUtil @Inject constructor(
             .sortedBy { it.index }
 
     /**
+     * Deletes remote archives of `$baseName.$suffix` under [remoteDstDir]:
+     * the volume parts and, if [includeSingle], the single-file archive too.
+     * Returns false only if the remote directory could not be listed.
+     */
+    private suspend fun deleteRemoteArchivesImpl(client: CloudClient, remoteDstDir: String, baseName: String, suffix: String, includeSingle: Boolean): Boolean {
+        val names = runCatching {
+            client.listFiles(remoteDstDir).files.map { it.name }
+        }.getOrElse {
+            log { "Failed to list $remoteDstDir: ${it.localizedMessage}" }
+            return false
+        }
+
+        val single = "$baseName.$suffix"
+        names.forEach { name ->
+            val isPart = parseVolumePartFileName(name)?.let { it.baseName == baseName && it.suffix == suffix } == true
+            if ((includeSingle && name == single) || isPart) {
+                runCatching { withContext(Dispatchers.IO) { client.deleteFile("$remoteDstDir/$name") } }
+                    .onSuccess { log { "Deleted stale remote archive: $name" } }
+                    .onFailure { log { "Failed to delete stale remote archive: $name: ${it.localizedMessage}" } }
+            }
+        }
+        return true
+    }
+
+    /**
+     * Removes stale remote archives (single file and volume parts) of the
+     * given archive, called before a new volume backup is uploaded. Leftovers
+     * of a previous backup (e.g. a different part count, or a single-file
+     * archive from before volume mode was enabled) would be merged with the
+     * new parts on restore and silently corrupt the archive.
+     */
+    suspend fun deleteRemoteArchives(client: CloudClient, remoteDstDir: String, baseName: String, suffix: String): Boolean =
+        deleteRemoteArchivesImpl(client, remoteDstDir, baseName, suffix, includeSingle = true)
+
+    /**
+     * Removes stale remote volume parts (only) of the given archive, called
+     * before a new single-file archive is uploaded, so that a restore never
+     * picks up the old volume parts of a previous volume-mode backup.
+     */
+    suspend fun deleteRemoteVolumeParts(client: CloudClient, remoteDstDir: String, baseName: String, suffix: String): Boolean =
+        deleteRemoteArchivesImpl(client, remoteDstDir, baseName, suffix, includeSingle = false)
+
+    /**
      * Runs [command] (tar ... | zstd ...) and splits its output into volume
      * parts of [volumeSize] bytes under [dstDir], then uploads them to
      * [remoteDstDir].
      *
-     * @param stream when true, upload runs concurrently with compression. The
-     *               producer is only allowed to stay a bounded amount ahead:
-     *               already-finalized volumes are uploaded and deleted, so disk
-     *               usage stays close to a couple of volumes.
+     * @param stream when true, upload runs concurrently with compression. Each
+     *               finalized volume is uploaded and its local copy deleted, so
+     *               disk usage stays close to a couple of volumes.
      */
     suspend fun compressAndUpload(
         client: CloudClient,
@@ -87,69 +130,166 @@ class VolumeBackupUtil @Inject constructor(
         onUploading: (read: Long, total: Long) -> Unit = { _, _ -> },
     ): ShellResult = coroutineScope {
         val out = mutableListOf<String>()
-        val failures = AtomicInteger(0)
         val uploadedBytes = AtomicLong(0)
+        val uploadedIndexes = mutableListOf<Int>()
+        var remoteCleaned = false
+        var aborted = false
         var producerCode = -1
 
-        val uploadPart: suspend (VolumePart) -> Boolean = { part ->
-            val size = File(part.localPath).length()
-            val result = cloudRepository.upload(client = client, src = part.localPath, dstDir = remoteDstDir)
-            if (result.isSuccess) {
-                uploadedBytes.addAndGet(size)
-                onUploading(uploadedBytes.get(), 0)
-            }
-            result.isSuccess
+        rootService.mkdirs(dstDir)
+        // Ensure the app process can read files inside filesDir (recursive
+        // chown/chcon). Called once here: calling it per upload would queue behind the busy root shell and break streaming ("边上传边删除").
+        PathUtil.setFilesDirSELinux(context)
+
+        // Remove stale local parts from a previous failed run so they can not
+        // be mixed into this archive.
+        listVolumeParts(dstDir, baseName, suffix).forEach { part ->
+            rootService.deleteRecursively(part.localPath)
+            out.add(log { "Deleted stale local part: ${part.localPath}" })
         }
 
-        // Ensure the app process can read/write files inside filesDir.
-        PathUtil.setFilesDirSELinux(context)
-        rootService.mkdirs(dstDir)
-
         val fullCommand = splitCommand(command, dstDir, baseName, suffix, volumeSize)
+
+        // Uploads one part. On success the local copy is deleted right away.
+        // On failure the local copy is kept and the whole run aborts: a missing
+        // part would corrupt the archive.
+        val uploadPart: suspend (VolumePart) -> Boolean = { part ->
+            var cleanSuccess = true
+            if (remoteCleaned.not()) {
+                // Before the first part goes up, purge stale remote archives of
+                // this archive (old single file / different part count).
+                remoteCleaned = true
+                cleanSuccess = deleteRemoteArchives(client, remoteDstDir, baseName, suffix)
+            }
+            if (cleanSuccess) {
+                val size = File(part.localPath).length()
+                val result = runCatching {
+                    withContext(Dispatchers.IO) {
+                        client.upload(src = part.localPath, dst = remoteDstDir, onUploading = { _, _ -> })
+                    }
+                }
+                if (result.isSuccess) {
+                    uploadedIndexes.add(part.index)
+                    uploadedBytes.addAndGet(size)
+                    onUploading(uploadedBytes.get(), 0)
+                    // "边上传边删除": free the disk space as soon as the part is
+                    // safely on the cloud. Never delete on failure.
+                    rootService.deleteRecursively(part.localPath)
+                } else {
+                    out.add(log { "Failed to upload: ${part.localPath}: ${result.exceptionOrNull()?.localizedMessage}" })
+                }
+                result.isSuccess
+            } else {
+                out.add(log { "Failed to clean stale remote archives in $remoteDstDir." })
+                false
+            }
+        }
 
         if (stream) {
             val producer = async(Dispatchers.IO) { BaseUtil.execute(fullCommand).code }
             var producerDone = false
-            var nextToUpload = 0
+            var nextIndex = 0
 
             while (true) {
-                if (!producerDone && producer.isCompleted) {
+                if (producerDone.not() && producer.isCompleted) {
                     producerDone = true
                     producerCode = producer.await()
-                }
-
-                val parts = listVolumeParts(dstDir, baseName, suffix)
-                val count = parts.size
-                // While the producer is still running, the highest-numbered part
-                // may be incomplete, so it is not uploaded yet.
-                val safeCount = if (producerDone) count else (count - 1).coerceAtLeast(0)
-
-                while (nextToUpload < safeCount) {
-                    val part = parts.getOrNull(nextToUpload) ?: break
-                    if (uploadPart(part)) {
-                        nextToUpload++
-                    } else {
-                        failures.incrementAndGet()
-                        out.add(log { "Failed to upload: ${part.localPath}" })
-                        nextToUpload++
+                    if (producerCode != 0) {
+                        out.add(log { "Compression exited with code $producerCode, aborting." })
+                        aborted = true
+                        break
                     }
                 }
 
-                if (producerDone && nextToUpload >= count) break
+                val parts = listVolumeParts(dstDir, baseName, suffix)
+                // Track parts by their volume index instead of their position in
+                // the list: uploaded parts are deleted locally, so positions
+                // shift while indexes stay stable.
+                val lastIndex = parts.lastOrNull()?.index ?: -1
+                // While the producer is still running, the highest-numbered
+                // part may be incomplete, so it is not uploaded yet.
+                val safeLastIndex = if (producerDone) lastIndex else lastIndex - 1
+
+                while (nextIndex <= safeLastIndex) {
+                    val part = parts.firstOrNull { it.index == nextIndex }
+                    if (part == null) {
+                        // busybox split never leaves gaps; a missing part while
+                        // lower/higher ones exist means it disappeared. Retry
+                        // until the producer is done, then fail.
+                        out.add(log { "Missing local volume part #$nextIndex." })
+                        if (producerDone) aborted = true
+                        break
+                    }
+                    if (uploadPart(part)) {
+                        nextIndex++
+                    } else {
+                        out.add(log { "Aborting: ${part.localPath} is not on the cloud and the archive would be incomplete." })
+                        aborted = true
+                        break
+                    }
+                }
+
+                if (aborted) break
+                // The producer finished and every finalized part has been
+                // uploaded and deleted locally. Also covers a zero-part output.
+                if (producerDone && nextIndex > lastIndex) break
                 delay(POLL_INTERVAL_MS)
+            }
+
+            if (aborted && producer.isActive) {
+                // The compression shell is busy with the tar|split pipeline and
+                // can not be interrupted directly; kill the splitter via a
+                // separate shell so tar/zstd terminate on SIGPIPE and stop
+                // filling the disk. Depending on the busybox build the process
+                // shows up as "split" or "busybox", so try both. Then wait for
+                // the producer to return.
+                out.add(log { "Trying to stop the compression pipeline..." })
+                BaseUtil.kill(context, "split")
+                BaseUtil.kill(context, "busybox")
+                runCatching { producerCode = producer.await() }
             }
         } else {
             producerCode = withContext(Dispatchers.IO) { BaseUtil.execute(fullCommand).code }
-            listVolumeParts(dstDir, baseName, suffix).forEach { part ->
-                if (!uploadPart(part)) {
-                    failures.incrementAndGet()
-                    out.add(log { "Failed to upload: ${part.localPath}" })
+            if (producerCode == 0) {
+                listVolumeParts(dstDir, baseName, suffix).forEach { part ->
+                    if (aborted.not()) {
+                        if (uploadPart(part).not()) {
+                            out.add(log { "Aborting: ${part.localPath} is not on the cloud and the archive would be incomplete." })
+                            aborted = true
+                        }
+                    }
                 }
+            } else {
+                out.add(log { "Compression exited with code $producerCode, skip uploading." })
+            }
+        }
+
+        // The whole run failed: remove the parts that already reached the
+        // cloud. A partial archive on the server would fail (or silently
+        // corrupt) a future restore that merges it.
+        val isSuccess = producerCode == 0 && aborted.not()
+
+        // Degenerate case: the compression produced zero volume parts, so no
+        // upload ever ran and the remote was never cleaned. Still purge stale
+        // remote archives so a restore can not pick up an old backup.
+        if (isSuccess && remoteCleaned.not()) {
+            remoteCleaned = true
+            deleteRemoteArchives(client, remoteDstDir, baseName, suffix).also {
+                if (it.not()) out.add(log { "Failed to clean stale remote archives in $remoteDstDir." })
+            }
+        }
+
+        if (isSuccess.not() && uploadedIndexes.isNotEmpty()) {
+            uploadedIndexes.forEach { index ->
+                val remotePath = "$remoteDstDir/${volumePartFileName(baseName, suffix, index)}"
+                runCatching { withContext(Dispatchers.IO) { client.deleteFile(remotePath) } }
+                    .onSuccess { out.add(log { "Removed incomplete remote part: $remotePath" }) }
+                    .onFailure { out.add(log { "Failed to remove incomplete remote part: $remotePath" }) }
             }
         }
 
         ShellResult(
-            code = if (producerCode == 0 && failures.get() == 0) 0 else -1,
+            code = if (isSuccess) 0 else -1,
             input = listOf(fullCommand),
             out = out,
         )
@@ -165,6 +305,7 @@ class VolumeBackupUtil @Inject constructor(
         dstDir: String,
         baseName: String,
         suffix: String,
+        onDownloading: (written: Long, total: Long) -> Unit = { _, _ -> },
     ): ShellResult = coroutineScope {
         val out = mutableListOf<String>()
         var isSuccess = true
@@ -183,18 +324,33 @@ class VolumeBackupUtil @Inject constructor(
         if (parts.isEmpty()) {
             isSuccess = false
             out.add(log { "No volume part found for $baseName.$suffix in $srcDir." })
-        } else {
-            PathUtil.setFilesDirSELinux(context)
+        } else if (parts.map { it.index } != parts.indices.toList()) {
+            // A missing or extra part index (e.g. leftovers of an older backup
+            // with more parts) would silently corrupt the merged archive.
+            isSuccess = false
+            out.add(log { "Volume part indexes are not contiguous: expected 0..${parts.size - 1}, got ${parts.map { it.index }}. The remote archive is incomplete or mixed with parts of another backup." })
+        }
+
+        if (isSuccess) {
+            // Create the merge dir BEFORE fixing up SELinux/ownership, so that
+            // the freshly created dir is also covered and the app process can
+            // write the downloaded parts into it.
+            rootService.mkdirs(dstDir)
             val mergeDir = "$dstDir/.volume_merge"
             rootService.deleteRecursively(mergeDir)
             rootService.mkdirs(mergeDir)
+            PathUtil.setFilesDirSELinux(context)
 
+            val downloadedBytes = AtomicLong(0)
             parts.forEach { part ->
                 val remotePath = "$srcDir/${volumePartFileName(baseName, suffix, part.index)}"
                 try {
                     withContext(Dispatchers.IO) {
-                        client.download(src = remotePath, dst = mergeDir) { _, _ -> }
+                        client.download(src = remotePath, dst = mergeDir) { written, _ ->
+                            onDownloading(downloadedBytes.get() + written, 0)
+                        }
                     }
+                    downloadedBytes.addAndGet(File("$mergeDir/${volumePartFileName(baseName, suffix, part.index)}").length())
                 } catch (t: Throwable) {
                     isSuccess = false
                     out.add(log { "Failed to download $remotePath." })

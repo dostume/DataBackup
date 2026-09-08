@@ -443,7 +443,11 @@ class PackagesRestoreUtil @Inject constructor(
                 }
             }.getOrDefault(false)
 
-            if (client.exists(src)) {
+            // Some clients (e.g. SMB) throw on a broken connection instead of
+            // returning false; never let that crash the whole restore task.
+            val hasSingle = runCatching { client.exists(src) }.getOrDefault(false)
+
+            if (hasSingle) {
                 var flag = true
                 var progress = 0.0
                 with(CoroutineScope(coroutineContext)) {
@@ -474,8 +478,19 @@ class PackagesRestoreUtil @Inject constructor(
                     }
                 }
             } else if (hasVolumes) {
-                volumeBackupUtil.downloadAndMerge(client = client, srcDir = srcDir, dstDir = dstDir, baseName = baseName, suffix = suffix).apply {
-                    t.updateInfo(dataType = dataType, log = (t.getLog(dataType) + "\n${outString}").trim())
+                var flag = true
+                var progress = 0.0
+                with(CoroutineScope(coroutineContext)) {
+                    launch {
+                        while (flag) {
+                            t.updateInfo(dataType = dataType, content = progress.formatSize())
+                            delay(500)
+                        }
+                    }
+                }
+                volumeBackupUtil.downloadAndMerge(client = client, srcDir = srcDir, dstDir = dstDir, baseName = baseName, suffix = suffix, onDownloading = { written, _ -> progress = written.toDouble() }).apply {
+                    flag = false
+                    t.updateInfo(dataType = dataType, log = (t.getLog(dataType) + "\n${outString}").trim(), content = progress.formatSize())
                     if (isSuccess) {
                         onDownloaded(p, t, dataType, dstDir)
                     } else {

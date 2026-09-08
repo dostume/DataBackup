@@ -57,9 +57,13 @@ class CloudRepository @Inject constructor(
                 out.add(log { stringWriter.toString() })
         }
 
-        rootService.deleteRecursively(src).also { result ->
-            isSuccess = isSuccess and result
-            if (result.not()) out.add(log { "Failed to delete $src." })
+        // Delete the local file only after it is safely on the cloud. Deleting
+        // on upload failure loses the data on both ends.
+        if (isSuccess) {
+            rootService.deleteRecursively(src).also { result ->
+                isSuccess = isSuccess and result
+                if (result.not()) out.add(log { "Failed to delete $src." })
+            }
         }
 
         ShellResult(code = if (isSuccess) 0 else -1, input = listOf(), out = out)

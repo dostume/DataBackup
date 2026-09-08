@@ -17,6 +17,7 @@ import com.xayah.core.model.OperationState
 import com.xayah.core.model.SelectionType
 import com.xayah.core.model.database.PackageEntity
 import com.xayah.core.model.database.TaskDetailPackageEntity
+import com.xayah.core.model.util.formatSize
 import com.xayah.core.model.util.getCompressPara
 import com.xayah.core.network.client.CloudClient
 import com.xayah.core.rootservice.service.RemoteRootService
@@ -427,6 +428,18 @@ class PackagesBackupUtil @Inject constructor(
         t.updateInfo(dataType = dataType, state = OperationState.PROCESSING, bytes = sizeBytes)
 
         val command = Tar.buildCompressInCurCommand(cur = srcDir, src = "./*.apk", extra = ct.getCompressPara(context.readCompressionLevel().first()))
+
+        // Display the uploaded bytes while the volumes are streaming out.
+        var flag = true
+        with(CoroutineScope(coroutineContext)) {
+            launch {
+                while (flag) {
+                    t.updateInfo(dataType = dataType, content = uploaded.toDouble().formatSize())
+                    delay(500)
+                }
+            }
+        }
+
         volumeBackupUtil.compressAndUpload(
             client = client,
             command = command,
@@ -438,6 +451,8 @@ class PackagesBackupUtil @Inject constructor(
             stream = context.readStreamUpload().first(),
             onUploading = { read, _ -> uploaded = read },
         ).also { result ->
+            flag = false
+            t.updateInfo(dataType = dataType, content = uploaded.toDouble().formatSize())
             isSuccess = result.isSuccess
             out.addAll(result.out)
             if (result.isSuccess) {
@@ -521,6 +536,17 @@ class PackagesBackupUtil @Inject constructor(
             extra = ct.getCompressPara(context.readCompressionLevel().first()),
         )
 
+        // Display the uploaded bytes while the volumes are streaming out.
+        var flag = true
+        with(CoroutineScope(coroutineContext)) {
+            launch {
+                while (flag) {
+                    t.updateInfo(dataType = dataType, content = uploaded.toDouble().formatSize())
+                    delay(500)
+                }
+            }
+        }
+
         volumeBackupUtil.compressAndUpload(
             client = client,
             command = command,
@@ -532,6 +558,8 @@ class PackagesBackupUtil @Inject constructor(
             stream = context.readStreamUpload().first(),
             onUploading = { read, _ -> uploaded = read },
         ).also { result ->
+            flag = false
+            t.updateInfo(dataType = dataType, content = uploaded.toDouble().formatSize())
             isSuccess = result.isSuccess
             out.addAll(result.out)
             if (result.isSuccess) {

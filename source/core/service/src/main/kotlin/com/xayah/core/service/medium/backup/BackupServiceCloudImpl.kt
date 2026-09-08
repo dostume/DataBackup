@@ -18,6 +18,7 @@ import com.xayah.core.network.client.CloudClient
 import com.xayah.core.rootservice.service.RemoteRootService
 import com.xayah.core.service.util.CommonBackupUtil
 import com.xayah.core.service.util.MediumBackupUtil
+import com.xayah.core.service.util.VolumeBackupUtil
 import com.xayah.core.util.PathUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -89,6 +90,10 @@ internal class BackupServiceCloudImpl @Inject constructor() : AbstractBackupServ
         } else {
             val result = mMediumBackupUtil.backupMedia(m = m, t = t, r = r, dstDir = dstDir)
             if (result.isSuccess && t.mediaInfo.state != OperationState.SKIP) {
+                // Purge volume parts left over from a previous volume-mode
+                // backup, otherwise a later restore would merge them with the
+                // new single-file archive and corrupt it.
+                mVolumeBackupUtil.deleteRemoteVolumeParts(client = mClient, remoteDstDir = remoteFileDir, baseName = DataType.MEDIA_MEDIA.type, suffix = m.indexInfo.compressionType.suffix)
                 mMediumBackupUtil.upload(client = mClient, m = m, t = t, srcDir = dstDir, dstDir = remoteFileDir)
             }
         }
@@ -149,6 +154,9 @@ internal class BackupServiceCloudImpl @Inject constructor() : AbstractBackupServ
 
     @Inject
     override lateinit var mMediumBackupUtil: MediumBackupUtil
+
+    @Inject
+    lateinit var mVolumeBackupUtil: VolumeBackupUtil
 
     override val mRootDir by lazy { mPathUtil.getCloudTmpDir() }
     override val mFilesDir by lazy { mPathUtil.getCloudTmpFilesDir() }

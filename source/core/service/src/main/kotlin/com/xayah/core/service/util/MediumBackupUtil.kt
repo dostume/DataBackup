@@ -165,6 +165,17 @@ class MediumBackupUtil @Inject constructor(
             extra = ct.getCompressPara(context.readCompressionLevel().first()),
         )
 
+        // Display the uploaded bytes while the volumes are streaming out.
+        var flag = true
+        with(CoroutineScope(coroutineContext)) {
+            launch {
+                while (flag) {
+                    t.updateInfo(content = uploaded.toDouble().formatSize())
+                    delay(500)
+                }
+            }
+        }
+
         volumeBackupUtil.compressAndUpload(
             client = client,
             command = command,
@@ -176,6 +187,8 @@ class MediumBackupUtil @Inject constructor(
             stream = context.readStreamUpload().first(),
             onUploading = { read, _ -> uploaded = read },
         ).also { result ->
+            flag = false
+            t.updateInfo(content = uploaded.toDouble().formatSize())
             isSuccess = result.isSuccess
             out.addAll(result.out)
             if (result.isSuccess) {

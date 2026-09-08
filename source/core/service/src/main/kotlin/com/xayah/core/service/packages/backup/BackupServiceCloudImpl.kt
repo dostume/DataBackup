@@ -20,6 +20,7 @@ import com.xayah.core.network.client.CloudClient
 import com.xayah.core.rootservice.service.RemoteRootService
 import com.xayah.core.service.util.CommonBackupUtil
 import com.xayah.core.service.util.PackagesBackupUtil
+import com.xayah.core.service.util.VolumeBackupUtil
 import com.xayah.core.util.PathUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -98,6 +99,10 @@ internal class BackupServiceCloudImpl @Inject constructor() : AbstractBackupServ
                 mPackagesBackupUtil.backupData(p = p, t = t, r = r, dataType = type, dstDir = dstDir)
             }
             if (result.isSuccess && t.get(type).state != OperationState.SKIP) {
+                // Purge volume parts left over from a previous volume-mode
+                // backup, otherwise a later restore would merge them with the
+                // new single-file archive and corrupt it.
+                mVolumeBackupUtil.deleteRemoteVolumeParts(client = mClient, remoteDstDir = remoteAppDir, baseName = type.type, suffix = p.indexInfo.compressionType.suffix)
                 mPackagesBackupUtil.upload(client = mClient, p = p, t = t, dataType = type, srcDir = dstDir, dstDir = remoteAppDir)
             }
         }
@@ -176,6 +181,9 @@ internal class BackupServiceCloudImpl @Inject constructor() : AbstractBackupServ
 
     @Inject
     override lateinit var mPackagesBackupUtil: PackagesBackupUtil
+
+    @Inject
+    lateinit var mVolumeBackupUtil: VolumeBackupUtil
 
     override val mRootDir by lazy { mPathUtil.getCloudTmpDir() }
     override val mAppsDir by lazy { mPathUtil.getCloudTmpAppsDir() }
