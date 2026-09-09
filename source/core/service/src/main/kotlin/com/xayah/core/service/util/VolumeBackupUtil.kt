@@ -35,6 +35,7 @@ class VolumeBackupUtil @Inject constructor(
         private const val TAG = "VolumeBackupUtil"
         private const val VOLUME_SUFFIX_LEN = 5
         private const val POLL_INTERVAL_MS = 300L
+        private const val SPLITER_BINARY = "busybox"
     }
 
     data class VolumePart(val localPath: String, val index: Int)
@@ -50,7 +51,7 @@ class VolumeBackupUtil @Inject constructor(
         // umask 022: the volume files are created by the root shell, make sure
         // they are world-readable so the app process can upload them without a
         // recursive chown (which would need the busy root shell and serialize streaming).
-        return "umask 022; $command | busybox split -b $volumeSize -d -a $VOLUME_SUFFIX_LEN - ${SymbolUtil.QUOTE}$prefix${SymbolUtil.QUOTE}"
+        return "umask 022; $command | $SPLITER_BINARY split -b $volumeSize -d -a $VOLUME_SUFFIX_LEN - ${SymbolUtil.QUOTE}$prefix${SymbolUtil.QUOTE}"
     }
 
     private suspend fun listVolumeParts(dstDir: String, baseName: String, suffix: String): List<VolumePart> =
@@ -135,6 +136,24 @@ class VolumeBackupUtil @Inject constructor(
         var remoteCleaned = false
         var aborted = false
         var producerCode = -1
+
+        // busybox is not pre-installed on some OEM ROMs (notably OPPO/OnePlus
+        // ColorOS). Failing silently with "code 1" gives the user no hint;
+        // detect the missing binary early so the error message is actionable.
+        val spliterPathCandidates = listOf(
+            "/system/bin/$SPLITER_BINARY",
+            "/system/xbin/$SPLITER_BINARY",
+            "/data/local/bin/$SPLITER_BINARY",
+            "/data/local/tmp/$SPLITER_BINARY",
+        )
+        val hasSpliter = spliterPathCandidates.any { path ->
+            runCatching { rootService.exists(path) }.getOrDefault(false)
+        }
+        if (hasSpliter.not()) {
+            out.add(log { "Split tool missing: $SPLITER_BINARY not found in ${spliterPathCandidates.joinToString(" or ")}. " +
+                "Install a BusyBox app (e.g. 'BusyBox for Android NDK') and grant root, or switch to single-file backup mode (volume size = 0)." })
+            return@coroutineScope ShellResult(code = -1, input = listOf(), out = out)
+        }
 
         rootService.mkdirs(dstDir)
         // Ensure the app process can read files inside filesDir (recursive
