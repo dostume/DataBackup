@@ -137,22 +137,29 @@ class VolumeBackupUtil @Inject constructor(
         var aborted = false
         var producerCode = -1
 
-        // busybox is not pre-installed on some OEM ROMs (notably OPPO/OnePlus
-        // ColorOS). Failing silently with "code 1" gives the user no hint;
-        // detect the missing binary early so the error message is actionable.
-        val spliterPathCandidates = listOf(
-            "/system/bin/$SPLITER_BINARY",
-            "/system/xbin/$SPLITER_BINARY",
-            "/data/local/bin/$SPLITER_BINARY",
-            "/data/local/tmp/$SPLITER_BINARY",
-        )
-        val hasSpliter = spliterPathCandidates.any { path ->
-            runCatching { rootService.exists(path) }.getOrDefault(false)
-        }
-        if (hasSpliter.not()) {
-            out.add(log { "Split tool missing: $SPLITER_BINARY not found in ${spliterPathCandidates.joinToString(" or ")}. " +
-                "Install a BusyBox app (e.g. 'BusyBox for Android NDK') and grant root, or switch to single-file backup mode (volume size = 0)." })
-            return@coroutineScope ShellResult(code = -1, input = listOf(), out = out)
+        // volumeSize == 0 means single-file mode (no splitting). Skip the
+        // busybox check entirely: the original backup path before volume
+        // splitting was introduced worked without busybox and many devices
+        // (notably OPPO/OnePlus ColorOS) do not ship it.
+        if (volumeSize > 0) {
+            // busybox is not pre-installed on some OEM ROMs (notably
+            // OPPO/OnePlus ColorOS). Failing silently with "code 1" gives
+            // the user no hint; detect the missing binary early so the error
+            // message is actionable.
+            val spliterPathCandidates = listOf(
+                "/system/bin/$SPLITER_BINARY",
+                "/system/xbin/$SPLITER_BINARY",
+                "/data/local/bin/$SPLITER_BINARY",
+                "/data/local/tmp/$SPLITER_BINARY",
+            )
+            val hasSpliter = spliterPathCandidates.any { path ->
+                runCatching { rootService.exists(path) }.getOrDefault(false)
+            }
+            if (hasSpliter.not()) {
+                out.add(log { "Split tool missing: $SPLITER_BINARY not found in ${spliterPathCandidates.joinToString(" or ")}. " +
+                    "Install a BusyBox app (e.g. 'BusyBox for Android NDK') and grant root, or switch to single-file backup mode (volume size = 0)." })
+                return@coroutineScope ShellResult(code = -1, input = listOf(), out = out)
+            }
         }
 
         rootService.mkdirs(dstDir)
@@ -167,7 +174,15 @@ class VolumeBackupUtil @Inject constructor(
             out.add(log { "Deleted stale local part: ${part.localPath}" })
         }
 
-        val fullCommand = splitCommand(command, dstDir, baseName, suffix, volumeSize)
+        // volumeSize == 0: single-file mode. Write the compressed archive
+        // directly to a single file instead of splitting into volumes.
+        val singleFilePath = "$dstDir/$baseName.$suffix"
+        val useSingleFile = volumeSize <= 0L
+        val fullCommand = if (useSingleFile) {
+            "umask 022; $command > ${SymbolUtil.QUOTE}$singleFilePath${SymbolUtil.QUOTE}"
+        } else {
+            splitCommand(command, dstDir, baseName, suffix, volumeSize)
+        }
 
         // Uploads one part. On success the local copy is deleted right away.
         // On failure the local copy is kept and the whole run aborts: a missing
@@ -204,7 +219,33 @@ class VolumeBackupUtil @Inject constructor(
             }
         }
 
-        if (stream) {
+        if (useSingleFile) {
+            // Single-file mode: run compression directly to a single archive,
+            // clean up any stale remote volume parts from a previous volume-mode
+            // backup, then upload the archive.
+            producerCode = withContext(Dispatchers.IO) { BaseUtil.execute(fullCommand).code }
+            if (producerCode == 0) {
+                // Remove stale remote volume parts so a restore does not pick
+                // them up and merge them with the new single-file archive.
+                deleteRemoteVolumeParts(client, remoteDstDir, baseName, suffix)
+                val size = File(singleFilePath).length()
+                val result = runCatching {
+                    withContext(Dispatchers.IO) {
+                        client.upload(src = singleFilePath, dst = remoteDstDir, onUploading = { _, _ -> })
+                    }
+                }
+                if (result.isSuccess) {
+                    uploadedBytes.addAndGet(size)
+                    onUploading(uploadedBytes.get(), 0)
+                    rootService.deleteRecursively(singleFilePath)
+                } else {
+                    out.add(log { "Failed to upload: $singleFilePath: ${result.exceptionOrNull()?.localizedMessage}" })
+                    producerCode = -1
+                }
+            } else {
+                out.add(log { "Compression exited with code $producerCode, skip uploading." })
+            }
+        } else if (stream) {
             val producer = async(Dispatchers.IO) { BaseUtil.execute(fullCommand).code }
             var producerDone = false
             var nextIndex = 0
