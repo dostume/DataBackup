@@ -137,29 +137,26 @@ class VolumeBackupUtil @Inject constructor(
         var aborted = false
         var producerCode = -1
 
-        // volumeSize == 0 means single-file mode (no splitting). Skip the
-        // busybox check entirely: the original backup path before volume
-        // splitting was introduced worked without busybox and many devices
-        // (notably OPPO/OnePlus ColorOS) do not ship it.
+        // volumeSize > 0 means volume (split) mode. The app bundles busybox, tar, zstd in assets/bin.zip,
+        // released to context.binDir() by BaseUtil.releaseBase(). The root shell's PATH includes binDir(),
+        // so "busybox split" works directly. Check that the bundled busybox is available; if not, try to
+        // release it automatically. Many OEM ROMs (OPPO/OnePlus ColorOS etc.) do not ship system busybox.
         if (volumeSize > 0) {
-            // busybox is not pre-installed on some OEM ROMs (notably
-            // OPPO/OnePlus ColorOS). Failing silently with "code 1" gives
-            // the user no hint; detect the missing binary early so the error
-            // message is actionable.
-            val spliterPathCandidates = listOf(
-                "/system/bin/$SPLITER_BINARY",
-                "/system/xbin/$SPLITER_BINARY",
-                "/data/local/bin/$SPLITER_BINARY",
-                "/data/local/tmp/$SPLITER_BINARY",
-            )
-            val hasSpliter = spliterPathCandidates.any { path ->
-                runCatching { rootService.exists(path) }.getOrDefault(false)
+            val busyboxPath = "${context.binDir()}/$SPLITER_BINARY"
+            var hasSpliter = runCatching { rootService.exists(busyboxPath) }.getOrDefault(false)
+            if (hasSpliter.not()) {
+                out.add(log { "Built-in busybox not found at $busyboxPath, attempting to release from assets..." })
+                hasSpliter = runCatching { BaseUtil.releaseBase(context) }.getOrDefault(false)
+                if (hasSpliter) {
+                    hasSpliter = runCatching { rootService.exists(busyboxPath) }.getOrDefault(false)
+                }
             }
             if (hasSpliter.not()) {
-                out.add(log { "Split tool missing: $SPLITER_BINARY not found in ${spliterPathCandidates.joinToString(" or ")}. " +
-                    "Install a BusyBox app (e.g. 'BusyBox for Android NDK') and grant root, or switch to single-file backup mode (volume size = 0)." })
+                out.add(log { "Split tool unavailable: $busyboxPath does not exist after release attempt. " +
+                    "Please ensure the app's built-in binaries are present, or install a BusyBox app and grant root." })
                 return@coroutineScope ShellResult(code = -1, input = listOf(), out = out)
             }
+            out.add(log { "BusyBox split tool available at $busyboxPath" })
         }
 
         rootService.mkdirs(dstDir)
