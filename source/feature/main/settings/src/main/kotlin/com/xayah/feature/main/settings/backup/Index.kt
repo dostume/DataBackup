@@ -110,16 +110,18 @@ fun PageBackupSettings() {
                     }
                 }
 
-                val volumeCustom = -1L
                 val volumeOptions = remember {
                     listOf(
                         0L,
+                        64L * 1024 * 1024,
+                        128L * 1024 * 1024,
+                        256L * 1024 * 1024,
                         512L * 1024 * 1024,
                         1L * 1024 * 1024 * 1024,
                         2L * 1024 * 1024 * 1024,
                         4L * 1024 * 1024 * 1024,
                         8L * 1024 * 1024 * 1024,
-                        volumeCustom,
+                        16L * 1024 * 1024 * 1024,
                     )
                 }
                 val volumeDialogItems by remember(volumeOptions) {
@@ -128,7 +130,6 @@ fun PageBackupSettings() {
                             enum = bytes,
                             title = when {
                                 bytes == 0L -> context.getString(R.string.volume_size_off)
-                                bytes == volumeCustom -> context.getString(R.string.volume_size_custom)
                                 else -> bytes.toDouble().formatSize()
                             },
                             desc = null
@@ -139,7 +140,7 @@ fun PageBackupSettings() {
                 val volumeIndex = when {
                     volumeSize == 0L -> 0
                     volumeOptions.contains(volumeSize) -> volumeOptions.indexOf(volumeSize)
-                    else -> volumeOptions.lastIndex
+                    else -> volumeOptions.indexOf(volumeOptions.last())
                 }
                 val volumeLabel = when {
                     volumeSize == 0L -> context.getString(R.string.volume_size_off)
@@ -156,24 +157,7 @@ fun PageBackupSettings() {
                         items = volumeDialogItems
                     )
                     if (state.isConfirm) {
-                        val selected = volumeDialogItems[selectedIndex].enum as Long
-                        if (selected == volumeCustom) {
-                            val (editState, text) = dialogState.edit(
-                                title = context.getString(R.string.volume_size_custom),
-                                defValue = if (volumeSize > 0) (volumeSize / (1024 * 1024)).toString() else "",
-                                singleLine = true,
-                                label = context.getString(R.string.volume_size_custom_unit),
-                                desc = context.getString(R.string.volume_size_custom_desc),
-                            )
-                            if (editState.isConfirm) {
-                                val mb = text.trim().toLongOrNull()
-                                if (mb != null && mb > 0) {
-                                    context.saveVolumeSize(mb * 1024 * 1024)
-                                }
-                            }
-                        } else {
-                            context.saveVolumeSize(selected)
-                        }
+                        context.saveVolumeSize(volumeDialogItems[selectedIndex].enum as Long)
                     }
                 }
 
