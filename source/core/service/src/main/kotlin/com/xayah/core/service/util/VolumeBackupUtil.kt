@@ -8,6 +8,7 @@ import com.xayah.core.rootservice.service.RemoteRootService
 import com.xayah.core.util.LogUtil
 import com.xayah.core.util.PathUtil
 import com.xayah.core.util.SymbolUtil
+import com.xayah.core.util.binDir
 import com.xayah.core.util.command.BaseUtil
 import com.xayah.core.util.model.ShellResult
 import dagger.hilt.android.qualifiers.ApplicationContext
