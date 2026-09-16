@@ -98,7 +98,7 @@ class IndexViewModel @Inject constructor(
             }
 
             is IndexUiIntent.ExportLog -> {
-                // Export the current app log file for debugging
+                // Export the current app log file for debugging busybox/volume backup issues
                 runCatching {
                     val logPath = com.xayah.core.util.LogUtil.getLogFilePath(context)
                     val logFile = java.io.File(logPath)
