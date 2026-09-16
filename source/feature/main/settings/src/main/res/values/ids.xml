@@ -79,6 +79,10 @@
     <item name="volume_size_custom_desc" type="string" />
     <item name="stream_upload" type="string" />
     <item name="stream_upload_desc" type="string" />
+    <item name="export_log" type="string" />
+    <item name="export_log_desc" type="string" />
+    <item name="no_log_file" type="string" />
+    <item name="export_log_failed" type="string" />
 
     <item name="ic_rounded_acute" type="drawable" />
     <item name="ic_rounded_history" type="drawable" />
