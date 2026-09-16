@@ -244,16 +244,20 @@ class VolumeBackupUtil @Inject constructor(
                 out.add(log { "Compression exited with code $producerCode, skip uploading." })
             }
         } else if (stream) {
-            val producer = async(Dispatchers.IO) { BaseUtil.execute(fullCommand).code }
+            val producerJob = async(Dispatchers.IO) { BaseUtil.execute(fullCommand) }
             var producerDone = false
             var nextIndex = 0
 
             while (true) {
-                if (producerDone.not() && producer.isCompleted) {
+                if (producerDone.not() && producerJob.isCompleted) {
                     producerDone = true
-                    producerCode = producer.await()
+                    val result = producerJob.await()
+                    producerCode = result.code
+                    // Log command output for diagnostics when compression fails
                     if (producerCode != 0) {
+                        out.add(log { "Compression command: $fullCommand" })
                         out.add(log { "Compression exited with code $producerCode, aborting." })
+                        out.add(log { "Compression output: ${result.outString}" })
                         aborted = true
                         break
                     }
@@ -294,7 +298,7 @@ class VolumeBackupUtil @Inject constructor(
                 delay(POLL_INTERVAL_MS)
             }
 
-            if (aborted && producer.isActive) {
+            if (aborted && producerJob.isActive) {
                 // The compression shell is busy with the tar|split pipeline and
                 // can not be interrupted directly; kill the splitter via a
                 // separate shell so tar/zstd terminate on SIGPIPE and stop
@@ -304,7 +308,7 @@ class VolumeBackupUtil @Inject constructor(
                 out.add(log { "Trying to stop the compression pipeline..." })
                 BaseUtil.kill(context, "split")
                 BaseUtil.kill(context, "busybox")
-                runCatching { producerCode = producer.await() }
+                runCatching { producerCode = producerJob.await().code }
             }
         } else {
             producerCode = withContext(Dispatchers.IO) { BaseUtil.execute(fullCommand).code }
