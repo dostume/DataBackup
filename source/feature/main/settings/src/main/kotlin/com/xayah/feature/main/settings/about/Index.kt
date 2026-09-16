@@ -184,6 +184,12 @@ fun PageAboutSettings() {
                 ) {
                     navController.navigateSingle(MainRoutes.Translators.route)
                 }
+                Clickable(
+                    title = stringResource(id = R.string.export_log),
+                    value = stringResource(id = R.string.export_log_desc),
+                ) {
+                    viewModel.emitIntentOnIO(IndexUiIntent.ExportLog)
+                }
             }
 
             InnerBottomSpacer(innerPadding = it)

@@ -31,6 +31,8 @@ object LogUtil {
 
     private fun getLogFileName() = "$LOG_FILE_PREFIX$timestamp.txt"
 
+    fun getLogFilePath(context: Context): String = File(cacheDir, getLogFileName()).absolutePath
+
     fun initialize(context: Context, cacheDir: String) = runCatching {
         // Clear empty log files.
         FileUtil.listFilePaths(cacheDir).forEach { path ->

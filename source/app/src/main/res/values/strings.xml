@@ -338,6 +338,8 @@
     <string name="protect_desc">Prevent this backup from being overwritten</string>
     <string name="about">About</string>
     <string name="about_app">About application</string>
+    <string name="export_log">Export log</string>
+    <string name="export_log_desc">Export app log to share for debugging</string>
     <string name="donate">Donate</string>
     <string name="buymeacoffee" translatable="false">Buy me a coffee</string>
     <string name="paypal" translatable="false">PayPal</string>
@@ -428,4 +430,6 @@
     <string name="notification_desc">This is needed to post necessary notifications</string>
     <string name="permission_is_denied">Permission is denied</string>
     <string name="root_denied_msg">Please check your root manager and restart app</string>
+    <string name="no_log_file">No log file found</string>
+    <string name="export_log_failed">Failed to export log</string>
 </resources>

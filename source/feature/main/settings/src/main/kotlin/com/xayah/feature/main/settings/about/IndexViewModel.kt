@@ -27,6 +27,7 @@ data class IndexUiState(
 sealed class IndexUiIntent : UiIntent {
     data object Load : IndexUiIntent()
     data class ToBrowser(val context: Context, val url: String) : IndexUiIntent()
+    data object ExportLog : IndexUiIntent()
 }
 
 @ExperimentalMaterial3Api
@@ -94,6 +95,18 @@ class IndexViewModel @Inject constructor(
 
             is IndexUiIntent.ToBrowser -> {
                 runCatching { intent.context.toBrowser(intent.url) }.onFailure { emitEffect(IndexUiEffect.ShowSnackbar(message = context.getString(R.string.no_browser))) }
+            }
+
+            is IndexUiIntent.ExportLog -> {
+                runCatching {
+                    val logPath = com.xayah.core.util.LogUtil.getLogFilePath(context)
+                    val logFile = java.io.File(logPath)
+                    if (logFile.exists()) {
+                        com.xayah.core.util.LogUtil.shareLog(context, logFile.name)
+                    } else {
+                        emitEffect(IndexUiEffect.ShowSnackbar(message = context.getString(R.string.no_log_file)))
+                    }
+                }.onFailure { emitEffect(IndexUiEffect.ShowSnackbar(message = context.getString(R.string.export_log_failed))) }
             }
         }
     }
