@@ -37,6 +37,14 @@ class VolumeBackupUtil @Inject constructor(
         private const val VOLUME_SUFFIX_LEN = 5
         private const val POLL_INTERVAL_MS = 300L
         private const val SPLITER_BINARY = "busybox"
+
+        /** Format volume size in bytes to a human-readable split argument.
+         *  BusyBox split accepts sizes with suffixes: 64M, 128M, 1G, etc. */
+        private fun formatVolumeSize(bytes: Long): String = when {
+            bytes >= 1024L * 1024 * 1024 -> "${bytes / (1024L * 1024 * 1024)}M"
+            bytes >= 1024L * 1024 -> "${bytes / (1024L * 1024)}M"
+            else -> "${bytes}B"
+        }
     }
 
     data class VolumePart(val localPath: String, val index: Int)
@@ -52,7 +60,10 @@ class VolumeBackupUtil @Inject constructor(
         // umask 022: the volume files are created by the root shell, make sure
         // they are world-readable so the app process can upload them without a
         // recursive chown (which would need the busy root shell and serialize streaming).
-        return "umask 022; $command | $SPLITER_BINARY split -b $volumeSize -d -a $VOLUME_SUFFIX_LEN - ${SymbolUtil.QUOTE}$prefix${SymbolUtil.QUOTE}"
+        // Use "split -b" with size suffix (e.g. 64M) for readability. The -d flag
+        // is NOT used because Magisk's busybox split (v1.36.1) does not support it.
+        // Numeric suffixes (aa, ab, ...) are the default and work across all busybox builds.
+        return "umask 022; $command | $SPLITER_BINARY split -b ${formatVolumeSize(volumeSize)} -a $VOLUME_SUFFIX_LEN - ${SymbolUtil.QUOTE}$prefix${SymbolUtil.QUOTE}"
     }
 
     private suspend fun listVolumeParts(dstDir: String, baseName: String, suffix: String): List<VolumePart> =
